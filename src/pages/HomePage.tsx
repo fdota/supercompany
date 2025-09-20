@@ -25,11 +25,11 @@ const HomePage = () => {
 
   const leftContent = (
     <div className="flex flex-col justify-center h-full">
-      <h1 className="font-pixel text-3xl lg:text-4xl text-magenta mb-8 leading-relaxed">
-        <TypewriterText text="Apriamo un'azienda insieme?" />
+      <h1 className="font-pixel text-sm md:text-3xl lg:text-4xl text-magenta mb-8 leading-relaxed text-center lg:text-right">
+        <TypewriterText text="Apriamo un'azienda Insieme?" />
       </h1>
       
-      <h2 className="font-pixel text-xl lg:text-2xl text-left-color mb-8 leading-relaxed">
+      <h2 className="font-pixel text-lg md:text-xl lg:text-2xl text-left-color mb-8 leading-relaxed text-center lg:text-left animate-blink">
         Se da solo non riesci, <span className="text-green italic">insieme</span> si può.
       </h2>
       
@@ -42,8 +42,10 @@ const HomePage = () => {
         
         <p>
           Per questo ho pensato a questa Super Company, una super azienda che parte dalla 
-          coesione per diventare grande. Qui puoi indicare il tuo potenziale contributo, 
-          che sia in danaro o in lavoro (se scegli le ore, ti chiederemo anche la tua area 
+          coesione per diventare grande. 
+      </p>
+       <p>  Qui sotto puoi indicare il tuo potenziale contributo, 
+          che sia in danaro e/o in lavoro (se scegli le ore, ti chiederemo anche la tua area 
           di competenza).
         </p>
         
@@ -183,10 +185,43 @@ const HomePage = () => {
         </form>
         
         {/* Sezione condivisione social */}
-        <div className="mt-12 pt-8 border-t border-supercompany-dark-gray">
-          <p className="font-mono text-sm text-right-color text-center leading-relaxed">
-            Se ti piace il progetto e vuoi condividerlo con persone che pensi possano essere interessate, ecco qui alcuni social.
-          </p>
+<div className="mt-12 text-center">
+  <h4 className="font-pixel text-md text-right-color mb-4">Aiutaci a crescere.</h4>
+  <div className="flex justify-center space-x-4">
+
+    {/* WhatsApp: Usa un messaggio pre-compilato */}
+    <a 
+      href="https://wa.me/?text=Ehi,%20dai%20un'occhiata%20a%20Supercompany!%20Un%20progetto%20per%20creare%20un'azienda%20tutti%20insieme%20partendo%20da%20zero.%20Il%20sito%20%C3%A8%20supercompany.it" 
+      target="_blank" 
+      className="text-green hover:text-magenta transition-colors">
+      WHATSAPP
+    </a>
+
+    {/* LinkedIn: Condivide il link e usa i meta tag del sito per l'anteprima */}
+    <a 
+      href="https://www.linkedin.com/shareArticle?mini=true&url=https://supercompany.it" 
+      target="_blank" 
+      className="text-green hover:text-magenta transition-colors">
+      LINKEDIN
+    </a>
+
+    {/* Facebook: Condivide il link e usa i meta tag del sito per l'anteprima */}
+    <a 
+      href="https://www.facebook.com/sharer/sharer.php?u=https://supercompany.it" 
+      target="_blank" 
+      className="text-green hover:text-magenta transition-colors">
+      FACEBOOK
+    </a>
+
+    {/* X (Twitter): Usa un messaggio pre-compilato */}
+    <a 
+      href="https://twitter.com/intent/tweet?url=https://supercompany.it&text=Ehi,%20scopri%20Supercompany!%20Un%20progetto%20per%20creare%20un'azienda%20tutti%20insieme." 
+      target="_blank" 
+      className="text-green hover:text-magenta transition-colors">
+      X
+    </a>
+
+  </div>
         </div>
       </div>
     </div>

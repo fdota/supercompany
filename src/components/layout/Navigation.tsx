@@ -11,7 +11,7 @@ const Navigation = () => {
 
   return (
     <nav className="mb-8">
-      <div className="flex items-center justify-between mb-6">
+      <div className="flex flex-col md:flex-row items-center md:justify-between mb-6 space-y-4 md:space-y-0">
         <Link to="/" className="font-pixel text-sm hover:text-green transition-colors">
           <span className="text-magenta">supercompany</span><span className="text-green">.it</span>
         </Link>

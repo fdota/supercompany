@@ -110,22 +110,23 @@
 }
 
 @layer components {
-  /* Split Screen Layout */
-  .split-screen {
-    @apply min-h-screen flex flex-col lg:flex-row;
-  }
+  /* === Layout Orizzontale (Nero sopra / Bianco sotto) === */
+
+.split-screen {
+  @apply min-h-screen flex flex-col;
+}
   
-  .split-left {
-    @apply flex-1 p-8 lg:p-12 xl:p-16;
-    background: hsl(var(--left-bg));
-    color: hsl(var(--left-text));
-  }
+.split-left {
+  @apply flex-1 w-full p-8 lg:p-12 xl:p-16 flex flex-col justify-center;
+  background: hsl(var(--left-bg));
+  color: hsl(var(--left-text));
+}
   
-  .split-right {
-    @apply flex-1 p-8 lg:p-12 xl:p-16;
-    background: hsl(var(--right-bg));
-    color: hsl(var(--right-text));
-  }
+.split-right {
+  @apply flex-1 w-full p-8 lg:p-12 xl:p-16 flex flex-col justify-center;
+  background: hsl(var(--right-bg));
+  color: hsl(var(--right-text));
+}
   
   /* Typography Classes */
   .font-pixel {
@@ -189,4 +190,15 @@
   .nav-link:hover::after {
     width: 100%;
   }
+}
+/* === Animazione Lampeggiante (Blink) === */
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+.animate-blink {
+  animation: blink 6s step-end infinite;
 }
