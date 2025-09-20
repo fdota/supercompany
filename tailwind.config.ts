@@ -47,16 +47,16 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        sidebar: {
-          DEFAULT: "hsl(var(--sidebar-background))",
-          foreground: "hsl(var(--sidebar-foreground))",
-          primary: "hsl(var(--sidebar-primary))",
-          "primary-foreground": "hsl(var(--sidebar-primary-foreground))",
-          accent: "hsl(var(--sidebar-accent))",
-          "accent-foreground": "hsl(var(--sidebar-accent-foreground))",
-          border: "hsl(var(--sidebar-border))",
-          ring: "hsl(var(--sidebar-ring))",
-        },
+        // Supercompany Brand Colors
+        'supercompany-black': 'hsl(var(--supercompany-black))',
+        'supercompany-white': 'hsl(var(--supercompany-white))',
+        'supercompany-magenta': 'hsl(var(--supercompany-magenta))',
+        'supercompany-green': 'hsl(var(--supercompany-green))',
+        'supercompany-dark-gray': 'hsl(var(--supercompany-dark-gray))',
+      },
+      fontFamily: {
+        'pixel': ['Press Start 2P', 'cursive'],
+        'mono': ['Fira Code', 'monospace'],
       },
       borderRadius: {
         lg: "var(--radius)",
