@@ -33,7 +33,7 @@ const HomePage = () => {
         Se da solo non riesci, <span className="text-green italic">insieme</span> si può.
       </h2>
       
-      <div className="font-mono text-sm lg:text-base text-left-color leading-relaxed space-y-4 max-w-md italic">
+      <div className="font-mono text-sm lg:text-base text-left-color leading-relaxed space-y-4 max-w-md mx-auto text-center italic">
         <p>
           Ciao a tutti, mi chiamo Fabio e sto cercando di creare una comunita' di persone 
           che vogliano aprire un'azienda vincente assieme. E' difficile farcela da soli. 
