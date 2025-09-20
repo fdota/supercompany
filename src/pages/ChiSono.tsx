@@ -40,7 +40,7 @@ const ChiSono = () => {
           intelligenza artificiale.
         </p>
         
-        <p className="text-supercompany-magenta">
+        <p>
           Mi piacerebbe aprire un'azienda con altre persone perche' riconosco quanto 
           sia difficile farlo da soli.
         </p>
@@ -54,8 +54,8 @@ const ChiSono = () => {
         
         <p>
           E' vero, se hai una buona idea puoi provare ad entrare in un incubatore, 
-          farti finanziare, ma io volevo fare una cosa molto diversa. <strong className="text-supercompany-green">
-          Creare da zero un gruppo e far decidere al gruppo cosa fare!</strong>
+          farti finanziare, ma io volevo fare una cosa molto diversa. <strong>
+          Creare da zero una Comunita' e far decidere a questa cosa fare!</strong>
         </p>
         
         <p>
@@ -65,12 +65,12 @@ const ChiSono = () => {
           crescere, respirare, vivere e interagire.
         </p>
         
-        <p className="text-supercompany-green">
+        <p className="text-supercompany-magenta">
           Non ho figli e non so se ne avro', ma mi piacerebbe poter dire che sono stato 
           il "La" di qualcosa molto piu' grande di me.
         </p>
         
-        <p className="font-bold text-supercompany-magenta">
+        <p className="font-bold text-supercompany-green">
           Buon viaggio a chi salira' a bordo!
         </p>
       </div>
