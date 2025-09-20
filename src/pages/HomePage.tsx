@@ -33,7 +33,7 @@ const HomePage = () => {
         Se da solo non riesci, <span className="text-green italic">insieme</span> si può.
       </h2>
       
-      <div className="font-mono text-sm lg:text-base text-left-color leading-relaxed space-y-4">
+      <div className="font-mono text-sm lg:text-base text-left-color leading-relaxed space-y-4 max-w-md italic">
         <p>
           Ciao a tutti, mi chiamo Fabio e sto cercando di creare una comunita' di persone 
           che vogliano aprire un'azienda vincente assieme. E' difficile farcela da soli. 
@@ -151,7 +151,7 @@ const HomePage = () => {
           {(formData.contributionType === "time" || formData.contributionType === "both") && (
             <>
               <div>
-                <Label htmlFor="hours" className="text-sm font-mono text-right-color">Ore settimanali</Label>
+                <Label htmlFor="hours" className="text-sm font-mono text-right-color">Ore dedicate al progetto</Label>
                 <Input
                   id="hours"
                   type="number"

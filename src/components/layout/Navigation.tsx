@@ -11,25 +11,25 @@ const Navigation = () => {
 
   return (
     <nav className="mb-8">
-      <div className="mb-6">
-        <Link to="/" className="text-magenta font-pixel text-sm hover:text-green transition-colors">
-          supercompany.it
+      <div className="flex items-center justify-between mb-6">
+        <Link to="/" className="font-pixel text-sm hover:text-green transition-colors">
+          <span className="text-magenta">supercompany</span><span className="text-green">.it</span>
         </Link>
+        <ul className="flex space-x-6">
+          {navItems.map((item) => (
+            <li key={item.path}>
+              <Link
+                to={item.path}
+                className={`nav-link font-mono text-sm ${
+                  location.pathname === item.path ? "text-magenta" : "text-left-color"
+                }`}
+              >
+                {">"} {item.label}
+              </Link>
+            </li>
+          ))}
+        </ul>
       </div>
-      <ul className="space-y-3">
-        {navItems.map((item) => (
-          <li key={item.path}>
-            <Link
-              to={item.path}
-              className={`nav-link font-mono text-sm ${
-                location.pathname === item.path ? "text-magenta" : "text-left-color"
-              }`}
-            >
-              {">"} {item.label}
-            </Link>
-          </li>
-        ))}
-      </ul>
     </nav>
   );
 };
