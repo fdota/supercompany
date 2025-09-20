@@ -181,6 +181,13 @@ const HomePage = () => {
             {">"} Unisciti Ora
           </Button>
         </form>
+        
+        {/* Sezione condivisione social */}
+        <div className="mt-12 pt-8 border-t border-supercompany-dark-gray">
+          <p className="font-mono text-sm text-right-color text-center leading-relaxed">
+            Se ti piace il progetto e vuoi condividerlo con persone che pensi possano essere interessate, ecco qui alcuni social.
+          </p>
+        </div>
       </div>
     </div>
   );
