@@ -17,9 +17,7 @@ export default defineConfig(({ mode }) => ({
   },
   build: {
     outDir: "dist",
-    emptyOutDir: true,
-    rollupOptions: {
-      input: path.resolve(__dirname, "public/index.html")
-    }
+    emptyOutDir: true
+    // RIMOSSO: rollupOptions che puntava a public/index.html (che hai cancellato)
   }
 }));
