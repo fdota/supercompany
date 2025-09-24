@@ -1,27 +1,25 @@
-const { GoogleSpreadsheet } = require('google-spreadsheet');
-const { JWT } = require('google-auth-library');
+import { GoogleSpreadsheet } from 'google-spreadsheet';
+import { JWT } from 'google-auth-library';
 
-// Carica le credenziali in modo sicuro dalle variabili d'ambiente di Netlify
 const serviceAccountAuth = new JWT({
   email: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
-  key: process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/g, '\n'), // Formatta la chiave correttamente
+  key: process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/g, '\n'),
   scopes: ['https://www.googleapis.com/auth/spreadsheets'],
 });
 
 const SPREADSHEET_ID = '1h-12BwHiS1JYh2UtFrytQXgA3UkGuTT8wnwc49kdg3g';
 const doc = new GoogleSpreadsheet(SPREADSHEET_ID, serviceAccountAuth);
 
-exports.handler = async (event) => {
+export const handler = async (event) => {
   if (event.httpMethod !== 'POST') {
     return { statusCode: 405, body: 'Method Not Allowed' };
   }
 
   try {
     await doc.loadInfo();
-    const sheet = doc.sheetsByIndex[0]; // Seleziona il primo foglio
+    const sheet = doc.sheetsByIndex[0];
     const data = JSON.parse(event.body);
 
-    // Assicurati che le intestazioni nel tuo foglio corrispondano esattamente a queste chiavi
     await sheet.addRow({
       'Data': new Date().toLocaleString('it-IT', { timeZone: 'Europe/Rome' }),
       'Name': data.name || '',
