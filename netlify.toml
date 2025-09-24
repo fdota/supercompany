@@ -1,6 +1,7 @@
 [build]
   command = "npm run build"
   publish = "dist"
+  functions = "netlify/functions"
 
 [build.processing]
   skip_processing = true
@@ -8,6 +9,11 @@
 [[redirects]]
   from = "/*"
   to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/:splat"
   status = 200
 
 [[headers]]
@@ -19,3 +25,6 @@
   for = "/*.css"  
   [headers.values]
     "Content-Type" = "text/css"
+
+[functions]
+  node_bundler = "esbuild"
