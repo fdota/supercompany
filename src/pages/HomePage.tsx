@@ -51,8 +51,10 @@ const HomePage = () => {
         Se da solo non riesci, <span className="text-green italic">insieme</span> si può.
       </h2>
       <div className="font-mono text-sm lg:text-base text-left-color leading-relaxed space-y-4 max-w-md mx-auto text-center italic">
-        <p>Ciao a tutti, mi chiamo Fabio...</p>
-        {/* ... Il resto del tuo testo ... */}
+        <p>Ciao a tutti, mi chiamo Fabio e sto cercando di creare una comunita' di persone che vogliano aprire un'azienda vincente assieme. E' difficile farcela da soli. I soldi e le competenze non bastano mai.</p>
+        <p>Per questo ho pensato a questa Super Company, una super azienda che parte dalla coesione per diventare grande. Qui puoi indicare il tuo potenziale contributo, che sia in danaro o in lavoro (se scegli le ore, ti chiederemo anche la tua area di competenza).</p>
+        <p>Unire piu' persone insieme per aprire un'azienda e' un'idea che avevo fin da bambino. Se non riusciro' potro' dire di averci almeno provato. Se invece funzionera' sara' la mia piu' grande soddisfazione!</p>
+        <p className="text-magenta">Guarda i nostri progressi, e se vuoi, unisciti a noi!</p>
       </div>
     </div>
   );
@@ -60,11 +62,13 @@ const HomePage = () => {
   const rightContent = (
     <div className="flex flex-col justify-center h-full p-4">
       <div className="mb-12">
-        {/* ... Il codice dei contatori rimane qui ... */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+          <CounterBlock title="Promesse di Investimento" value="€ 0" subtitle="Da <strong class='text-magenta'>0</strong> persone." colorScheme="magenta" />
+          <CounterBlock title="Valore Ore di Lavoro" value="€ 0" subtitle="Da <strong class='text-magenta'>0</strong> persone." colorScheme="magenta" />
+        </div>
+        <CounterBlock title="Totale Promesse" value="€ 0" subtitle="Un impegno preso da <strong class='text-green'>0</strong> persone." variant="large" colorScheme="green" />
       </div>
-      
-      {/* Aggiungiamo 'relative z-10' per risolvere il problema dei clic */}
-      <div className="relative z-10">
+      <div>
         <h3 className="font-pixel text-xl text-right-color mb-6">Ora tocca a te.</h3>
         <form name="contact" data-netlify="true" netlify-honeypot="bot-field" onSubmit={handleSubmit} className="space-y-6">
           <input type="hidden" name="form-name" value="contact" />

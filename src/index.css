@@ -2,8 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Supercompany Design System - Retro-tech Split Screen Aesthetic */
-
 @layer base {
   :root {
     /* Supercompany Brand Colors */
@@ -18,92 +16,18 @@
     --left-text: var(--supercompany-white);
     --right-bg: var(--supercompany-white);
     --right-text: var(--supercompany-dark-gray);
-    
-    /* Component Colors */
-    --background: var(--supercompany-white);
-    --foreground: var(--supercompany-dark-gray);
-    
-    --card: var(--supercompany-white);
-    --card-foreground: var(--supercompany-dark-gray);
-    
-    --popover: var(--supercompany-white);
-    --popover-foreground: var(--supercompany-dark-gray);
-    
-    --primary: var(--supercompany-magenta);
-    --primary-foreground: var(--supercompany-white);
-    
-    --secondary: var(--supercompany-green);
-    --secondary-foreground: var(--supercompany-white);
-    
-    --muted: 0 0% 94.1%;
-    --muted-foreground: 0 0% 45.1%;
-    
-    --accent: var(--supercompany-green);
-    --accent-foreground: var(--supercompany-white);
-    
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: var(--supercompany-white);
-    
-    --border: 0 0% 89.8%;
-    --input: 0 0% 89.8%;
-    --ring: var(--supercompany-magenta);
-    
-    --radius: 0.25rem;
-    
+
     /* Typography */
     --font-pixel: 'Press Start 2P', cursive;
     --font-mono: 'Fira Code', monospace;
   }
-
-  .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
-  }
 }
 
 @layer base {
-  * {
-    @apply border-border;
-  }
-
   body {
     @apply bg-background text-foreground font-mono;
     font-family: var(--font-mono);
   }
-  
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-pixel);
   }
@@ -111,94 +35,25 @@
 
 @layer components {
   /* === Layout Orizzontale (Nero sopra / Bianco sotto) === */
-
-.split-screen {
-  @apply min-h-screen flex flex-col;
-}
-  
-.split-left {
-  @apply flex-1 w-full p-8 lg:p-12 xl:p-16 flex flex-col justify-center;
-  background: hsl(var(--left-bg));
-  color: hsl(var(--left-text));
-}
-  
-.split-right {
-  @apply flex-1 w-full p-8 lg:p-12 xl:p-16 flex flex-col justify-center;
-  background: hsl(var(--right-bg));
-  color: hsl(var(--right-text));
-}
-  
-  /* Typography Classes */
-  .font-pixel {
-    font-family: var(--font-pixel);
+  .split-screen {
+    @apply min-h-screen flex flex-col;
   }
-  
-  .font-mono {
-    font-family: var(--font-mono);
-  }
-  
-  .text-magenta {
-    color: hsl(var(--supercompany-magenta));
-  }
-  
-  .text-green {
-    color: hsl(var(--supercompany-green));
-  }
-  
-  .text-left-color {
+  .split-left {
+    @apply flex-1 w-full p-8 lg:p-12 xl:p-16 flex flex-col justify-center;
+    background: hsl(var(--left-bg));
     color: hsl(var(--left-text));
   }
-  
-  .text-right-color {
+  .split-right {
+    @apply flex-1 w-full p-8 lg:p-12 xl:p-16 flex flex-col justify-center;
+    background: hsl(var(--right-bg));
     color: hsl(var(--right-text));
   }
   
-  /* Typewriter Effect */
-  .typewriter {
-    overflow: hidden;
-    border-right: 0.15em solid hsl(var(--supercompany-magenta));
-    white-space: nowrap;
-    animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
+  /* === Animazione Lampeggiante (Blink) === */
+  @keyframes blink {
+    50% { opacity: 0; }
   }
-  
-  @keyframes typing {
-    from { width: 0; }
-    to { width: 100%; }
+  .animate-blink {
+    animation: blink 6s step-end infinite;
   }
-  
-  @keyframes blink-caret {
-    from, to { border-color: transparent; }
-    50% { border-color: hsl(var(--supercompany-magenta)); }
-  }
-  
-  /* Navigation Link Style */
-  .nav-link {
-    @apply text-left-color hover:text-magenta transition-colors duration-300 relative;
-  }
-  
-  .nav-link::after {
-    content: '';
-    position: absolute;
-    width: 0;
-    height: 2px;
-    bottom: -4px;
-    left: 0;
-    background-color: hsl(var(--supercompany-magenta));
-    transition: width 0.3s ease-in-out;
-  }
-  
-  .nav-link:hover::after {
-    width: 100%;
-  }
-}
-/* === Animazione Lampeggiante (Blink) === */
-
-@keyframes blink {
-  50% {
-    opacity: 0;
-  }
-}
-
-.animate-blink {
-  animation: blink 6s step-end infinite;
 }

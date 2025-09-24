@@ -2,7 +2,6 @@ import { Link, useLocation } from "react-router-dom";
 
 const Navigation = () => {
   const location = useLocation();
-
   const navItems = [
     { path: "/", label: "home" },
     { path: "/chi-sono", label: "chi_sono" },
