@@ -1,7 +1,7 @@
-const { GoogleSpreadsheet } = require('google-spreadsheet');
-const { JWT } = require('google-auth-library');
+import { GoogleSpreadsheet } from 'google-spreadsheet';
+import { JWT } from 'google-auth-library';
 
-exports.handler = async (event) => {
+export const handler = async (event) => {
   const headers = {
     'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Headers': 'Content-Type',
@@ -12,30 +12,38 @@ exports.handler = async (event) => {
     return { statusCode: 200, headers, body: '' };
   }
 
-  if (event.httpMethod !== 'POST') {
-    return { statusCode: 405, headers, body: JSON.stringify({ error: 'Method Not Allowed' }) };
-  }
+  console.log('🎯 FUNZIONE CHIAMATA!');
 
   try {
+    console.log('📧 Service Account Email:', process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL ? 'PRESENTE' : 'MANCANTE');
+    console.log('🔑 Private Key:', process.env.GOOGLE_PRIVATE_KEY ? 'PRESENTE' : 'MANCANTE');
+
     const serviceAccountAuth = new JWT({
       email: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
       key: process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/g, '\n'),
       scopes: ['https://www.googleapis.com/auth/spreadsheets'],
     });
 
-    // ✅ SPREADSHEET ID CORRETTO (dal tuo link)
     const SPREADSHEET_ID = '1h-12BwHiS1JYh2UtFrytQXgA3UkGuTT8wnwc49kdg3g';
     const doc = new GoogleSpreadsheet(SPREADSHEET_ID, serviceAccountAuth);
 
+    console.log('🔗 Connessione al documento...');
     await doc.loadInfo();
+    console.log('✅ Documento caricato:', doc.title);
+
     const sheet = doc.sheetsByIndex[0];
+    console.log('📊 Foglio selezionato:', sheet.title);
+
     const data = JSON.parse(event.body);
+    console.log('📨 Dati ricevuti:', data);
 
     const oreValue = parseInt(data.hours) || 0;
     const investimentoValue = parseInt(data.amount) || 0;
     const valoreOre = oreValue * 10;
     const totale = investimentoValue + valoreOre;
 
+    console.log('✍️ Scrittura riga...');
+    
     await sheet.addRow({
       'Data': new Date().toLocaleString('it-IT', { timeZone: 'Europe/Rome' }),
       'Nome': data.name || '',
@@ -48,6 +56,8 @@ exports.handler = async (event) => {
       'Totale': totale
     });
 
+    console.log('✅ Riga scritta con successo!');
+
     return {
       statusCode: 200,
       headers,
@@ -56,14 +66,15 @@ exports.handler = async (event) => {
         message: 'Dati salvati con successo!'
       })
     };
+
   } catch (error) {
-    console.error('ERRORE:', error);
+    console.error('❌ ERRORE COMPLETO:', error);
     return {
       statusCode: 500,
       headers,
       body: JSON.stringify({ 
         success: false, 
-        error: error.message 
+        error: error.message
       })
     };
   }
