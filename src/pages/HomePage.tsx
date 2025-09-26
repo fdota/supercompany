@@ -10,12 +10,21 @@ import { useState, useEffect } from "react";
 const HomePage = () => {
   const [formData, setFormData] = useState({ name: "", email: "", contributionType: "", amount: "", hours: "", expertise: "" });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [counters, setCounters] = useState({ totalMoney: 0, totalHours: 0, totalPeople: 0, totalValue: 0 });
+
+  useEffect(() => {
+    // In futuro, qui caricheremo i dati reali dal Google Sheet per aggiornare i contatori
+    const loadExistingData = async () => {
+      console.log("Caricamento dati dal Sheet...");
+    };
+    loadExistingData();
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
     try {
-      const response = await fetch('/api/save-to-sheet', {
+      const response = await fetch('/api/save-to-sheet', { // Indirizzo API corretto
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
@@ -23,9 +32,11 @@ const HomePage = () => {
       const result = await response.json();
       if (result.success) {
         alert('✅ Grazie! La tua adesione è stata registrata con successo.');
-        setFormData({ name: "", email: "", contributionType: "", amount: "", hours: "", expertise: "" });
+        setFormData({ name: "", email: "", contributionType: "", amount: "", hours: "", expertise: "" }); // Reset del form
       } else {
-        alert('⚠️ Si è verificato un errore nel salvataggio. Riprova. Errore: ' + result.error);
+        // Mostra un errore più specifico se il backend lo fornisce
+        const errorMessage = result.error || 'Si è verificato un errore sconosciuto.';
+        alert('⚠️ Si è verificato un errore nel salvataggio. Riprova. Dettagli: ' + errorMessage);
       }
     } catch (error) {
       alert('⚠️ Si è verificato un errore di rete. Controlla la connessione e riprova.');
@@ -55,12 +66,12 @@ const HomePage = () => {
     <div className="flex flex-col justify-center h-full p-4">
       <div className="mb-12">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-          <CounterBlock title="Promesse di Investimento" value="€ 0" subtitle="Da <strong>0</strong> persone." />
-          <CounterBlock title="Valore Ore di Lavoro" value="€ 0" subtitle="Da <strong>0</strong> persone." />
+          <CounterBlock title="Promesse di Investimento" value="€ 0" subtitle="Da <strong class='text-magenta'>0</strong> persone." />
+          <CounterBlock title="Valore Ore di Lavoro" value="€ 0" subtitle="Da <strong class='text-magenta'>0</strong> persone." />
         </div>
-        <CounterBlock title="Totale Promesse" value="€ 0" subtitle="Un impegno preso da <strong>0</strong> persone." variant="large" />
+        <CounterBlock title="Totale Promesse" value="€ 0" subtitle="Un impegno preso da <strong class='text-green'>0</strong> persone." variant="large" />
       </div>
-      <div>
+      <div className="relative z-10">
         <h3 className="font-pixel text-xl text-right-color mb-6">Ora tocca a te.</h3>
         <form name="contact" data-netlify="true" netlify-honeypot="bot-field" onSubmit={handleSubmit} className="space-y-6">
           <input type="hidden" name="form-name" value="contact" />
