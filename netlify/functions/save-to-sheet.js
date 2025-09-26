@@ -13,10 +13,32 @@ export const handler = async (event) => {
   }
 
   console.log('🎯 FUNZIONE CHIAMATA!');
+  console.log('📨 Raw body received:', event.body);
+  console.log('📨 HTTP Method:', event.httpMethod);
 
   try {
     console.log('📧 Service Account Email:', process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL ? 'PRESENTE' : 'MANCANTE');
     console.log('🔑 Private Key:', process.env.GOOGLE_PRIVATE_KEY ? 'PRESENTE' : 'MANCANTE');
+
+    // PARSING ROBUSTO DEL JSON
+    let data = {};
+    try {
+      if (event.body) {
+        data = JSON.parse(event.body);
+      }
+      console.log('📨 Dati ricevuti:', data);
+    } catch (parseError) {
+      console.error('❌ Errore parsing JSON:', parseError);
+      console.log('📨 Raw body:', event.body);
+      return {
+        statusCode: 400,
+        headers,
+        body: JSON.stringify({ 
+          success: false, 
+          error: 'Dati non validi: ' + parseError.message 
+        })
+      };
+    }
 
     const serviceAccountAuth = new JWT({
       email: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
@@ -33,9 +55,6 @@ export const handler = async (event) => {
 
     const sheet = doc.sheetsByIndex[0];
     console.log('📊 Foglio selezionato:', sheet.title);
-
-    const data = JSON.parse(event.body);
-    console.log('📨 Dati ricevuti:', data);
 
     const oreValue = parseInt(data.hours) || 0;
     const investimentoValue = parseInt(data.amount) || 0;
