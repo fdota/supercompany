@@ -27,7 +27,7 @@ export const handler = async (event) => {
     });
     return { statusCode: 200, body: JSON.stringify({ success: true, message: 'Dati salvati con successo!' }) };
   } catch (error) {
-    console.error('Errore nella funzione Netlify:', error);
+    console.error('ERRORE NELLA FUNZIONE NETLIFY:', error);
     return { statusCode: 500, body: JSON.stringify({ success: false, error: error.message }) };
   }
 };
