@@ -56,6 +56,10 @@ export const handler = async (event) => {
     const sheet = doc.sheetsByIndex[0];
     console.log('📊 Foglio selezionato:', sheet.title);
 
+    // CONTROLLO PER GESTIRE SHEET CON TANTE RIGHE
+    const rows = await sheet.getRows();
+    console.log('📊 Righe totali nel sheet:', rows.length);
+
     const oreValue = parseInt(data.hours) || 0;
     const investimentoValue = parseInt(data.amount) || 0;
     const valoreOre = oreValue * 10;
@@ -75,6 +79,9 @@ export const handler = async (event) => {
       'Totale': totale
     });
 
+    // Verifica che la riga sia stata scritta
+    const updatedRows = await sheet.getRows();
+    console.log('✅ Righe dopo scrittura:', updatedRows.length);
     console.log('✅ Riga scritta con successo!');
 
     return {
