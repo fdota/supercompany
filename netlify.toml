@@ -3,17 +3,18 @@
   publish = "dist"
   functions = "netlify/functions"
 
-# Regola per le funzioni API (deve essere la PRIMA regola importante)
+# IMPORTANTE: Redirect per le funzioni PRIMA delle regole SPA
 [[redirects]]
   from = "/api/*"
   to = "/.netlify/functions/:splat"
   status = 200
+  force = true
 
-# Regola "catch-all" per l'applicazione (deve essere DOPO quella dell'API)
+# Redirect SPA (deve venire DOPO le API)
 [[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
 
-[functions."save-to-sheet"]
-  timeout = 25
+[functions]
+  node_bundler = "esbuild"
