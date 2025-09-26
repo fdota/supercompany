@@ -29,17 +29,22 @@ export const handler = async (event) => {
       scopes: ['https://www.googleapis.com/auth/spreadsheets'],
     });
 
-    // CONNESSIONE AL SHEET
-    const SPREADSHEET_ID = 'INSERISCI_IL_NUOVO_ID_QUI'; // ⚠️ IMPORTANTE!
+    // ✅ SPREADSHEET_ID CORRETTO
+    const SPREADSHEET_ID = '1ePEDA2-0JN7DHJadP2565bFk4xSCDrbWhuXjgH3GGHw';
     const doc = new GoogleSpreadsheet(SPREADSHEET_ID, serviceAccountAuth);
+
+    console.log('🔗 Connessione al documento...');
     await doc.loadInfo();
+    console.log('✅ Documento caricato:', doc.title);
+
     const sheet = doc.sheetsByIndex[0];
+    console.log('📊 Foglio selezionato:', sheet.title);
 
     // CALCOLI NEL CODICE
     const oreValue = parseInt(data.hours) || 0;
     const investimentoValue = parseInt(data.amount) || 0;
-    const valoreOre = oreValue * 10;  // Calcolato nel codice
-    const totale = investimentoValue + valoreOre;  // Calcolato nel codice
+    const valoreOre = oreValue * 10;
+    const totale = investimentoValue + valoreOre;
 
     console.log('💰 Calcoli:', {
       oreValue,
@@ -57,8 +62,8 @@ export const handler = async (event) => {
       'Investimento': investimentoValue,
       'Ore': oreValue,
       'Competenza': data.expertise || '',
-      'Valore Ore': valoreOre,  // Calcolato dal codice
-      'Totale': totale          // Calcolato dal codice
+      'Valore Ore': valoreOre,
+      'Totale': totale
     });
 
     console.log('✅ Dati salvati con successo!');
