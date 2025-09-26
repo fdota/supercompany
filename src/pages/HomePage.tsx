@@ -13,14 +13,12 @@ const HomePage = () => {
   const [counters, setCounters] = useState({ totalMoney: 0, totalHours: 0, totalPeople: 0, totalValue: 0 });
 
   useEffect(() => {
-    // In futuro, qui caricheremo i dati reali dal Google Sheet per aggiornare i contatori
     const loadExistingData = async () => {
       console.log("Caricamento dati dal Sheet...");
     };
     loadExistingData();
   }, []);
 
-  // Questo useEffect è solo per l'anteprima locale mentre l'utente scrive
   useEffect(() => {
     if (typeof window !== 'undefined' && window.location.hostname === 'localhost') {
       const money = parseInt(formData.amount) || 0;
@@ -39,15 +37,29 @@ const HomePage = () => {
     e.preventDefault();
     setIsSubmitting(true);
     try {
-      const response = await fetch('/api/save-to-sheet', {
+      // ✅ CORREZIONE CRITICA: endpoint corretto
+      const response = await fetch('/.netlify/functions/save-to-sheet', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
       });
+      
       const result = await response.json();
+      
       if (response.ok && result.success) {
         alert('✅ Grazie! La tua adesione è stata registrata con successo.');
         setFormData({ name: "", email: "", contributionType: "", amount: "", hours: "", expertise: "" });
+        
+        // Aggiorna i contatori con i dati reali
+        const money = parseInt(formData.amount) || 0;
+        const hours = parseInt(formData.hours) || 0;
+        const hoursValue = hours * 10;
+        setCounters(prev => ({
+          totalMoney: prev.totalMoney + money,
+          totalHours: prev.totalHours + hours,
+          totalPeople: prev.totalPeople + 1,
+          totalValue: prev.totalValue + money + hoursValue
+        }));
       } else {
         const errorMessage = result.error || 'Errore sconosciuto dal server.';
         alert(`⚠️ Si è verificato un errore nel salvataggio. Riprova.\n\nDettagli: ${errorMessage}`);
@@ -91,9 +103,7 @@ const HomePage = () => {
       </div>
       <div className="relative z-10">
         <h3 className="font-pixel text-xl text-right-color mb-6">Ora tocca a te.</h3>
-        <form name="join-form" method="POST" data-netlify="true" netlify-honeypot="bot-field" onSubmit={handleSubmit} className="space-y-6">
-          <input type="hidden" name="form-name" value="join-form" />
-          <div style={{ display: 'none' }}><Label htmlFor="bot-field">Non compilare</Label><Input id="bot-field" name="bot-field" /></div>
+        <form onSubmit={handleSubmit} className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <Label htmlFor="name">Nome</Label>
@@ -132,4 +142,5 @@ const HomePage = () => {
 
   return <SplitLayout leftContent={leftContent} rightContent={rightContent} />;
 };
+
 export default HomePage;
