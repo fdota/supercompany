@@ -37,8 +37,8 @@ const HomePage = () => {
     e.preventDefault();
     setIsSubmitting(true);
     try {
-      // ✅ ENDPOINT CORRETTO - usa /api/ per il redirect
-      const response = await fetch('/api/save-to-sheet', {
+      // ✅ ENDPOINT CORRETTO - diretto a Netlify Functions
+      const response = await fetch('/.netlify/functions/save-to-sheet', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
