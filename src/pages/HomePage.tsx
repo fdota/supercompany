@@ -92,7 +92,11 @@ const HomePage = () => {
           </div>
           {(formData.contributionType === "money" || formData.contributionType === "both") && ( <div><Label htmlFor="amount" className="text-sm font-mono text-right-color">Importo (€)</Label><Input id="amount" name="amount" type="number" value={formData.amount} onChange={(e) => setFormData(prev => ({ ...prev, amount: e.target.value }))} className="mt-1 border-supercompany-dark-gray focus:ring-supercompany-magenta" min="0" /></div>)}
           {(formData.contributionType === "time" || formData.contributionType === "both") && ( <><div><Label htmlFor="hours" className="text-sm font-mono text-right-color">Ore dedicate al progetto</Label><Input id="hours" name="hours" type="number" value={formData.hours} onChange={(e) => setFormData(prev => ({ ...prev, hours: e.target.value }))} className="mt-1 border-supercompany-dark-gray focus:ring-supercompany-magenta" min="0" /></div><div><Label htmlFor="expertise" className="text-sm font-mono text-right-color">Area di competenza</Label><Input id="expertise" name="expertise" value={formData.expertise} onChange={(e) => setFormData(prev => ({ ...prev, expertise: e.target.value }))} className="mt-1 border-supercompany-dark-gray focus:ring-supercompany-magenta" placeholder="es. Marketing, Sviluppo, Design..." /></div></>)}
-          <Button type="submit" disabled={isSubmitting} className="w-full bg-supercompany-magenta hover:bg-supercompany-magenta/90 text-white font-mono">
+          <Button 
+            type="submit" 
+            disabled={isSubmitting}
+            className="w-full bg-magenta hover:bg-magenta/90 text-white font-mono border-2 border-magenta hover:border-green transition-colors"
+          >
             {isSubmitting ? 'Invio in corso...' : '> Unisciti Ora'}
           </Button>
         </form>

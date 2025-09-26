@@ -48,6 +48,8 @@ export default {
           foreground: "hsl(var(--card-foreground))",
         },
         // Supercompany Brand Colors
+        magenta: 'hsl(var(--supercompany-magenta))', // <-- RIGA AGGIUNTA
+        green: 'hsl(var(--supercompany-green))',     // <-- RIGA AGGIUNTA
         'supercompany-black': 'hsl(var(--supercompany-black))',
         'supercompany-white': 'hsl(var(--supercompany-white))',
         'supercompany-magenta': 'hsl(var(--supercompany-magenta))',
@@ -65,20 +67,12 @@ export default {
       },
       keyframes: {
         "accordion-down": {
-          from: {
-            height: "0",
-          },
-          to: {
-            height: "var(--radix-accordion-content-height)",
-          },
+          from: { height: "0" },
+          to: { height: "var(--radix-accordion-content-height)" },
         },
         "accordion-up": {
-          from: {
-            height: "var(--radix-accordion-content-height)",
-          },
-          to: {
-            height: "0",
-          },
+          from: { height: "var(--radix-accordion-content-height)" },
+          to: { height: "0" },
         },
       },
       animation: {
