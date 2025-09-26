@@ -3,14 +3,15 @@
   publish = "dist"
   functions = "netlify/functions"
 
-# IMPORTANTE: Redirect per le funzioni PRIMA delle regole SPA
+# Redirect per le funzioni ESCLUDENDO i assets
 [[redirects]]
   from = "/api/*"
   to = "/.netlify/functions/:splat"
   status = 200
   force = true
+  conditions = {Path: "!/api/assets/*"}
 
-# Redirect SPA (deve venire DOPO le API)
+# Redirect SPA
 [[redirects]]
   from = "/*"
   to = "/index.html"
