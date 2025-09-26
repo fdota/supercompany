@@ -38,7 +38,7 @@ const HomePage = () => {
     setIsSubmitting(true);
     try {
       // ✅ CORREZIONE CRITICA: endpoint corretto
-      const response = await fetch('/.netlify/functions/save-to-sheet', {
+      const response = await fetch('/api/save-to-sheet', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
