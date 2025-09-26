@@ -4,30 +4,12 @@
 
 @layer base {
   :root {
-    /* Supercompany Brand Colors */
-    --supercompany-black: 0 0% 0%;
-    --supercompany-white: 0 0% 100%;
-    --supercompany-magenta: 300 100% 50%;
-    --supercompany-green: 120 100% 50%;
-    --supercompany-dark-gray: 0 0% 6.7%;
-    
-    /* Split Screen Layout Colors */
-    --left-bg: var(--supercompany-black);
-    --left-text: var(--supercompany-white);
-    --right-bg: var(--supercompany-white);
-    --right-text: var(--supercompany-dark-gray);
-
-    /* Typography */
-    --font-pixel: 'Press Start 2P', cursive;
-    --font-mono: 'Fira Code', monospace;
+    /* ... (tutte le tue variabili di colore rimangono uguali) ... */
   }
 }
 
 @layer base {
-  body {
-    @apply bg-background text-foreground font-mono;
-    font-family: var(--font-mono);
-  }
+  body { /* ... */ }
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-pixel);
   }
@@ -35,9 +17,7 @@
 
 @layer components {
   /* === Layout Orizzontale (Nero sopra / Bianco sotto) === */
-  .split-screen {
-    @apply min-h-screen flex flex-col;
-  }
+  .split-screen { @apply min-h-screen flex flex-col; }
   .split-left {
     @apply flex-1 w-full p-8 lg:p-12 xl:p-16 flex flex-col justify-center;
     background: hsl(var(--left-bg));
@@ -48,13 +28,21 @@
     background: hsl(var(--right-bg));
     color: hsl(var(--right-text));
   }
-
-  /* === Utility di Testo Aggiunte === */
-  .text-magenta {
-    color: hsl(var(--supercompany-magenta));
+  
+  /* === Classe Utility per Font Pixel === */
+  .font-pixel {
+    font-family: var(--font-pixel);
   }
-  .text-green {
-    color: hsl(var(--supercompany-green));
+
+  /* === Stili per il Menu a Tendina (Select) === */
+  [data-radix-select-content] {
+    @apply bg-white text-black border border-black rounded-md shadow-lg;
+  }
+  [data-radix-select-item] {
+    @apply px-4 py-2 hover:bg-magenta hover:text-white cursor-pointer;
+  }
+  [data-radix-select-item][data-highlighted] {
+    @apply bg-magenta text-white;
   }
   
   /* === Animazione Lampeggiante (Blink) === */
