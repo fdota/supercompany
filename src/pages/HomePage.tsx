@@ -37,7 +37,7 @@ const HomePage = () => {
     e.preventDefault();
     setIsSubmitting(true);
     try {
-      // ✅ CORREZIONE CRITICA: endpoint corretto
+      // ✅ ENDPOINT CORRETTO - usa /api/ per il redirect
       const response = await fetch('/api/save-to-sheet', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

@@ -9,7 +9,7 @@
   to = "/.netlify/functions/:splat"
   status = 200
   force = true
-  conditions = {Path: "!/api/assets/*"}
+  conditions = { Path: "!/api/assets/*" }
 
 # Redirect SPA
 [[redirects]]
