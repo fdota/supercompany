@@ -4,19 +4,47 @@
 
 @layer base {
   :root {
-    /* ... (tutte le tue variabili di colore rimangono uguali) ... */
+    --supercompany-black: 0 0% 0%;
+    --supercompany-white: 0 0% 100%;
+    --supercompany-magenta: 300 100% 50%;
+    --supercompany-green: 120 100% 50%;
+    --supercompany-dark-gray: 0 0% 6.7%;
+    --left-bg: var(--supercompany-black);
+    --left-text: var(--supercompany-white);
+    --right-bg: var(--supercompany-white);
+    --right-text: var(--supercompany-dark-gray);
+    --font-pixel: 'Press Start 2P', cursive;
+    --font-mono: 'Fira Code', monospace;
+    --border: 240 5.9% 90%;
+    --input: 240 5.9% 90%;
+    --ring: 240 5.9% 10%;
+    --background: 0 0% 100%;
+    --foreground: 240 10% 3.9%;
+    --primary: 240 5.9% 10%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 240 4.8% 95.9%;
+    --secondary-foreground: 240 5.9% 10%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --muted: 240 4.8% 95.9%;
+    --muted-foreground: 240 3.8% 46.1%;
+    --accent: 240 4.8% 95.9%;
+    --accent-foreground: 240 5.9% 10%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 3.9%;
+    --radius: 0.25rem;
   }
 }
 
 @layer base {
-  body { /* ... */ }
-  h1, h2, h3, h4, h5, h6 {
-    font-family: var(--font-pixel);
-  }
+  body { font-family: var(--font-mono); }
+  h1, h2, h3, h4, h5, h6 { font-family: var(--font-pixel); }
 }
 
 @layer components {
-  /* === Layout Orizzontale (Nero sopra / Bianco sotto) === */
+  /* Layout */
   .split-screen { @apply min-h-screen flex flex-col; }
   .split-left {
     @apply flex-1 w-full p-8 lg:p-12 xl:p-16 flex flex-col justify-center;
@@ -28,15 +56,9 @@
     background: hsl(var(--right-bg));
     color: hsl(var(--right-text));
   }
-  
-  /* === Classe Utility per Font Pixel === */
-  .font-pixel {
-    font-family: var(--font-pixel);
-  }
-
-  /* === Stili per il Menu a Tendina (Select) === */
+  /* Stili Select */
   [data-radix-select-content] {
-    @apply bg-white text-black border border-black rounded-md shadow-lg;
+    @apply bg-white text-black border border-black rounded-md shadow-lg z-50;
   }
   [data-radix-select-item] {
     @apply px-4 py-2 hover:bg-magenta hover:text-white cursor-pointer;
@@ -44,12 +66,7 @@
   [data-radix-select-item][data-highlighted] {
     @apply bg-magenta text-white;
   }
-  
-  /* === Animazione Lampeggiante (Blink) === */
-  @keyframes blink {
-    50% { opacity: 0; }
-  }
-  .animate-blink {
-    animation: blink 6s step-end infinite;
-  }
+  /* Animazione Blink */
+  @keyframes blink { 50% { opacity: 0; } }
+  .animate-blink { animation: blink 6s step-end infinite; }
 }

@@ -10,14 +10,6 @@ import { useState, useEffect } from "react";
 const HomePage = () => {
   const [formData, setFormData] = useState({ name: "", email: "", contributionType: "", amount: "", hours: "", expertise: "" });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [counters, setCounters] = useState({ totalMoney: 0, totalHours: 0, totalPeople: 0, totalValue: 0 });
-
-  useEffect(() => {
-    const loadExistingData = async () => {
-      console.log("Caricamento dati dal Sheet...");
-    };
-    loadExistingData();
-  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -63,10 +55,10 @@ const HomePage = () => {
     <div className="flex flex-col justify-center h-full p-4">
       <div className="mb-12">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-          <CounterBlock title="Promesse di Investimento" value="€ 0" subtitle="Da <strong class='text-magenta'>0</strong> persone." colorScheme="magenta" />
-          <CounterBlock title="Valore Ore di Lavoro" value="€ 0" subtitle="Da <strong class='text-magenta'>0</strong> persone." colorScheme="magenta" />
+          <CounterBlock title="Promesse di Investimento" value="€ 0" subtitle="Da <strong>0</strong> persone." />
+          <CounterBlock title="Valore Ore di Lavoro" value="€ 0" subtitle="Da <strong>0</strong> persone." />
         </div>
-        <CounterBlock title="Totale Promesse" value="€ 0" subtitle="Un impegno preso da <strong class='text-green'>0</strong> persone." variant="large" colorScheme="green" />
+        <CounterBlock title="Totale Promesse" value="€ 0" subtitle="Un impegno preso da <strong>0</strong> persone." variant="large" />
       </div>
       <div>
         <h3 className="font-pixel text-xl text-right-color mb-6">Ora tocca a te.</h3>
@@ -75,33 +67,29 @@ const HomePage = () => {
           <div style={{ position: 'absolute', left: '-5000px' }} aria-hidden="true"><input type="text" name="bot-field" /></div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <Label htmlFor="name" className="text-sm font-mono text-right-color">Nome</Label>
-              <Input id="name" name="name" value={formData.name} onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))} className="mt-1 border-supercompany-dark-gray focus:ring-supercompany-magenta" required />
+              <Label htmlFor="name">Nome</Label>
+              <Input id="name" name="name" value={formData.name} onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))} required />
             </div>
             <div>
-              <Label htmlFor="email" className="text-sm font-mono text-right-color">Email</Label>
-              <Input id="email" name="email" type="email" value={formData.email} onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))} className="mt-1 border-supercompany-dark-gray focus:ring-supercompany-magenta" required />
+              <Label htmlFor="email">Email</Label>
+              <Input id="email" name="email" type="email" value={formData.email} onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))} required />
             </div>
           </div>
           <div>
-            <Label htmlFor="contributionType" className="text-sm font-mono text-right-color">Tipo di contributo</Label>
+            <Label htmlFor="contributionType">Tipo di contributo</Label>
             <Select name="contributionType" value={formData.contributionType} onValueChange={(value) => setFormData(prev => ({ ...prev, contributionType: value }))}>
-              <SelectTrigger className="mt-1 border-supercompany-dark-gray"><SelectValue placeholder="Seleziona il tipo di contributo" /></SelectTrigger>
-              <SelectContent><SelectItem value="money">Investimento monetario</SelectItem><SelectItem value="time">Ore di lavoro</SelectItem><SelectItem value="both">Entrambi</SelectItem></SelectContent>
+              <SelectTrigger><SelectValue placeholder="Seleziona..." /></SelectTrigger>
+              <SelectContent><SelectItem value="money">Investimento</SelectItem><SelectItem value="time">Ore</SelectItem><SelectItem value="both">Entrambi</SelectItem></SelectContent>
             </Select>
           </div>
-          {(formData.contributionType === "money" || formData.contributionType === "both") && ( <div><Label htmlFor="amount" className="text-sm font-mono text-right-color">Importo (€)</Label><Input id="amount" name="amount" type="number" value={formData.amount} onChange={(e) => setFormData(prev => ({ ...prev, amount: e.target.value }))} className="mt-1 border-supercompany-dark-gray focus:ring-supercompany-magenta" min="0" /></div>)}
-          {(formData.contributionType === "time" || formData.contributionType === "both") && ( <><div><Label htmlFor="hours" className="text-sm font-mono text-right-color">Ore dedicate al progetto</Label><Input id="hours" name="hours" type="number" value={formData.hours} onChange={(e) => setFormData(prev => ({ ...prev, hours: e.target.value }))} className="mt-1 border-supercompany-dark-gray focus:ring-supercompany-magenta" min="0" /></div><div><Label htmlFor="expertise" className="text-sm font-mono text-right-color">Area di competenza</Label><Input id="expertise" name="expertise" value={formData.expertise} onChange={(e) => setFormData(prev => ({ ...prev, expertise: e.target.value }))} className="mt-1 border-supercompany-dark-gray focus:ring-supercompany-magenta" placeholder="es. Marketing, Sviluppo, Design..." /></div></>)}
-          <Button 
-            type="submit" 
-            disabled={isSubmitting}
-            className="w-full bg-magenta hover:bg-magenta/90 text-white font-mono border-2 border-magenta hover:border-green transition-colors"
-          >
+          {(formData.contributionType === "money" || formData.contributionType === "both") && ( <div><Label htmlFor="amount">Importo (€)</Label><Input id="amount" name="amount" type="number" value={formData.amount} onChange={(e) => setFormData(prev => ({ ...prev, amount: e.target.value }))} min="0" /></div>)}
+          {(formData.contributionType === "time" || formData.contributionType === "both") && ( <><div><Label htmlFor="hours">Ore</Label><Input id="hours" name="hours" type="number" value={formData.hours} onChange={(e) => setFormData(prev => ({ ...prev, hours: e.target.value }))} min="0" /></div><div><Label htmlFor="expertise">Competenza</Label><Input id="expertise" name="expertise" value={formData.expertise} onChange={(e) => setFormData(prev => ({ ...prev, expertise: e.target.value }))} placeholder="es. Marketing..." /></div></>)}
+          <Button type="submit" disabled={isSubmitting} className="w-full bg-magenta hover:bg-magenta/90 text-white font-mono border-2 border-magenta hover:border-green transition-colors">
             {isSubmitting ? 'Invio in corso...' : '> Unisciti Ora'}
           </Button>
         </form>
         <div className="mt-12 text-center">
-          <h4 className="font-pixel text-md text-right-color mb-4">Aiutaci a crescere.</h4>
+          <h4 className="font-pixel text-md mb-4">Aiutaci a crescere.</h4>
           <div className="flex justify-center space-x-4">
             <a href="https://wa.me/?text=Ehi,%20dai%20un'occhiata%20a%20Supercompany!%20Un%20progetto%20per%20creare%20un'azienda%20tutti%20insieme%20partendo%20da%20zero.%20Il%20sito%20%C3%A8%20supercompany.it" target="_blank" rel="noopener noreferrer" className="text-green hover:text-magenta transition-colors">WHATSAPP</a>
             <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://supercompany.it" target="_blank" rel="noopener noreferrer" className="text-green hover:text-magenta transition-colors">LINKEDIN</a>
