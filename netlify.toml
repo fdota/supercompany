@@ -3,20 +3,17 @@
   publish = "dist"
   functions = "netlify/functions"
 
-[build.processing]
-  skip_processing = true
-
+# Regola per le funzioni API (deve essere PRIMA della regola "catch-all")
 [[redirects]]
   from = "/api/*"
   to = "/.netlify/functions/:splat"
   status = 200
 
+# Regola "catch-all" per l'applicazione (deve essere L'ULTIMA)
 [[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
 
-# Aumenta il tempo massimo di esecuzione per la funzione specifica
-# Questa è la sezione che abbiamo aggiunto per risolvere il timeout
 [functions."save-to-sheet"]
   timeout = 25
