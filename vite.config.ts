@@ -17,6 +17,6 @@ export default defineConfig({
     outDir: "dist",
     emptyOutDir: true,
   },
-  // QUESTA RIGA RISOLVE TUTTO
-  base: "./", 
+  // CAMBIA QUESTA RIGA:
+  base: "/", 
 });
