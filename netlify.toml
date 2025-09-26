@@ -3,13 +3,13 @@
   publish = "dist"
   functions = "netlify/functions"
 
-# Regola per le funzioni API (FONDAMENTALE)
+# Regola per le funzioni API (deve essere la PRIMA regola importante)
 [[redirects]]
   from = "/api/*"
   to = "/.netlify/functions/:splat"
   status = 200
 
-# Regola "catch-all" per l'applicazione
+# Regola "catch-all" per l'applicazione (deve essere DOPO quella dell'API)
 [[redirects]]
   from = "/*"
   to = "/index.html"
