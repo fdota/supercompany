@@ -48,6 +48,14 @@
     background: hsl(var(--right-bg));
     color: hsl(var(--right-text));
   }
+
+  /* === Utility di Testo Aggiunte === */
+  .text-magenta {
+    color: hsl(var(--supercompany-magenta));
+  }
+  .text-green {
+    color: hsl(var(--supercompany-green));
+  }
   
   /* === Animazione Lampeggiante (Blink) === */
   @keyframes blink {
