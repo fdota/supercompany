@@ -1,36 +1,38 @@
-import { GoogleSpreadsheet } from 'google-spreadsheet';
-import { JWT } from 'google-auth-library';
+const { GoogleSpreadsheet } = require('google-spreadsheet');
+const { JWT } = require('google-auth-library');
 
-// Questa funzione "spacchetta" la chiave da Base64
-const decodedKey = Buffer.from(process.env.GOOGLE_PRIVATE_KEY, 'base64').toString('utf8');
+exports.handler = async (event) => {
+  const headers = {
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Headers': 'Content-Type',
+    'Access-Control-Allow-Methods': 'POST, OPTIONS'
+  };
 
-const serviceAccountAuth = new JWT({
-  email: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
-  key: decodedKey,
-  scopes: ['https://www.googleapis.com/auth/spreadsheets'],
-});
-
-const SPREADSHEET_ID = '1h-12BwHiS1JYh2UtFrytQXgA3UkGuTT8wnwc49kdg3g';
-const doc = new GoogleSpreadsheet(SPREADSHEET_ID, serviceAccountAuth);
-
-export const handler = async (event) => {
-  if (event.httpMethod !== 'POST') {
-    return { statusCode: 405, body: 'Method Not Allowed' };
+  if (event.httpMethod === 'OPTIONS') {
+    return { statusCode: 200, headers, body: '' };
   }
+
+  if (event.httpMethod !== 'POST') {
+    return { statusCode: 405, headers, body: JSON.stringify({ error: 'Method Not Allowed' }) };
+  }
+
   try {
+    const serviceAccountAuth = new JWT({
+      email: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
+      key: process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/g, '\n'), // Gestisce i \n
+      scopes: ['https://www.googleapis.com/auth/spreadsheets'],
+    });
+
+    const SPREADSHEET_ID = '1h-12BwH5I1Yh2UtfrytQXgA3UkGuTT8wnwc49kdq3g';
+    const doc = new GoogleSpreadsheet(SPREADSHEET_ID, serviceAccountAuth);
+
     await doc.loadInfo();
     const sheet = doc.sheetsByIndex[0];
     const data = JSON.parse(event.body);
-    await sheet.addRow({
-      'Data': new Date().toLocaleString('it-IT', { timeZone: 'Europe/Rome' }),
-      'Name': data.name || '', 'Email': data.email || '', 'Tipo': data.contributionType || '',
-      'Investimento': data.amount || 0, 'Ore': data.hours || 0, 'Competenza': data.expertise || '',
-      'Valore Ore': (parseInt(data.hours) || 0) * 10,
-      'TOTALE': (parseInt(data.amount) || 0) + ((parseInt(data.hours) || 0) * 10)
-    });
-    return { statusCode: 200, body: JSON.stringify({ success: true, message: 'Dati salvati con successo!' }) };
+
+    // ... resto del codice ...
+    
   } catch (error) {
-    console.error('ERRORE NELLA FUNZIONE NETLIFY:', error);
-    return { statusCode: 500, body: JSON.stringify({ success: false, error: error.message }) };
+    return { statusCode: 500, headers, body: JSON.stringify({ error: error.message }) };
   }
 };
