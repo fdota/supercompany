@@ -13,60 +13,42 @@ export const handler = async (event) => {
   }
 
   console.log('🎯 FUNZIONE CHIAMATA!');
-  console.log('📨 Raw body received:', event.body);
-  console.log('📨 HTTP Method:', event.httpMethod);
 
   try {
-    console.log('📧 Service Account Email:', process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL ? 'PRESENTE' : 'MANCANTE');
-    console.log('🔑 Private Key:', process.env.GOOGLE_PRIVATE_KEY ? 'PRESENTE' : 'MANCANTE');
-
-    // PARSING ROBUSTO DEL JSON
+    // PARSING DATI
     let data = {};
-    try {
-      if (event.body) {
-        data = JSON.parse(event.body);
-      }
-      console.log('📨 Dati ricevuti:', data);
-    } catch (parseError) {
-      console.error('❌ Errore parsing JSON:', parseError);
-      console.log('📨 Raw body:', event.body);
-      return {
-        statusCode: 400,
-        headers,
-        body: JSON.stringify({ 
-          success: false, 
-          error: 'Dati non validi: ' + parseError.message 
-        })
-      };
+    if (event.body) {
+      data = JSON.parse(event.body);
     }
+    console.log('📨 Dati ricevuti:', data);
 
+    // AUTENTICAZIONE
     const serviceAccountAuth = new JWT({
       email: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
       key: process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/g, '\n'),
       scopes: ['https://www.googleapis.com/auth/spreadsheets'],
     });
 
-    const SPREADSHEET_ID = '1h-12BwHiS1JYh2UtFrytQXgA3UkGuTT8wnwc49kdg3g';
+    // CONNESSIONE AL SHEET
+    const SPREADSHEET_ID = 'INSERISCI_IL_NUOVO_ID_QUI'; // ⚠️ IMPORTANTE!
     const doc = new GoogleSpreadsheet(SPREADSHEET_ID, serviceAccountAuth);
-
-    console.log('🔗 Connessione al documento...');
     await doc.loadInfo();
-    console.log('✅ Documento caricato:', doc.title);
-
     const sheet = doc.sheetsByIndex[0];
-    console.log('📊 Foglio selezionato:', sheet.title);
 
-    // CONTROLLO PER GESTIRE SHEET CON TANTE RIGHE
-    const rows = await sheet.getRows();
-    console.log('📊 Righe totali nel sheet:', rows.length);
-
+    // CALCOLI NEL CODICE
     const oreValue = parseInt(data.hours) || 0;
     const investimentoValue = parseInt(data.amount) || 0;
-    const valoreOre = oreValue * 10;
-    const totale = investimentoValue + valoreOre;
+    const valoreOre = oreValue * 10;  // Calcolato nel codice
+    const totale = investimentoValue + valoreOre;  // Calcolato nel codice
 
-    console.log('✍️ Scrittura riga...');
-    
+    console.log('💰 Calcoli:', {
+      oreValue,
+      investimentoValue,
+      valoreOre,
+      totale
+    });
+
+    // SCRITTURA NEL SHEET
     await sheet.addRow({
       'Data': new Date().toLocaleString('it-IT', { timeZone: 'Europe/Rome' }),
       'Nome': data.name || '',
@@ -75,26 +57,23 @@ export const handler = async (event) => {
       'Investimento': investimentoValue,
       'Ore': oreValue,
       'Competenza': data.expertise || '',
-      'Valore Ore': valoreOre,
-      'Totale': totale
+      'Valore Ore': valoreOre,  // Calcolato dal codice
+      'Totale': totale          // Calcolato dal codice
     });
 
-    // Verifica che la riga sia stata scritta
-    const updatedRows = await sheet.getRows();
-    console.log('✅ Righe dopo scrittura:', updatedRows.length);
-    console.log('✅ Riga scritta con successo!');
+    console.log('✅ Dati salvati con successo!');
 
     return {
       statusCode: 200,
       headers,
       body: JSON.stringify({ 
         success: true, 
-        message: 'Dati salvati con successo!'
+        message: 'Grazie! Il tuo contributo ci avvicina al milione! 🚀'
       })
     };
 
   } catch (error) {
-    console.error('❌ ERRORE COMPLETO:', error);
+    console.error('❌ ERRORE:', error);
     return {
       statusCode: 500,
       headers,
