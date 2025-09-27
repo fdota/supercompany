@@ -14,7 +14,7 @@ const CounterBlock = ({
   const sizeClasses = variant === "large" ? "p-8 border-2" : "p-6 border";
   const valueClasses = variant === "large" ? "text-6xl" : "text-4xl";
   
-  // 🎯 FORMATTAZIONE EURO ITALIANA CON PUNTI
+  // FORMATTAZIONE EURO ITALIANA
   const formattedValue = new Intl.NumberFormat('it-IT', { 
     style: 'currency', 
     currency: 'EUR',
@@ -28,7 +28,7 @@ const CounterBlock = ({
         <h3 className="font-pixel text-sm text-right-color mb-4 uppercase tracking-wide">
           {title}
         </h3>
-        <div className={`font-pixel ${valueClasses} ${variant === "large" ? 'text-green' : 'text-magenta'} mb-4`}>
+        <div className={`font-pixel ${valueClasses} ${variant === "large' ? 'text-green' : 'text-magenta'} mb-4`}>
           {formattedValue}
         </div>
         <p className="text-sm font-mono text-right-color" dangerouslySetInnerHTML={{ __html: subtitle }} />
@@ -36,3 +36,6 @@ const CounterBlock = ({
     </div>
   );
 };
+
+// 🎯 QUESTA RIGA È FUNDAMENTALE!
+export default CounterBlock;  // ✅ ESATTO
