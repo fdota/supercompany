@@ -14,6 +14,10 @@ const CounterBlock = ({
   const sizeClasses = variant === "large" ? "p-8 border-2" : "p-6 border";
   const valueClasses = variant === "large" ? "counter-large" : "counter-medium";
   
+  // 🎯 CLASSI OMBRA CORRETTE
+  const shadowClass = variant === "large" ? "text-shadow-green" : "text-shadow-none";
+  const textColorClass = variant === "large" ? "text-green" : "text-magenta";
+  
   // FORMATTAZIONE EURO ITALIANA
   const formattedValue = new Intl.NumberFormat('it-IT', { 
     style: 'currency', 
@@ -28,8 +32,8 @@ const CounterBlock = ({
         <h3 className="font-pixel text-sm text-right-color mb-4 uppercase tracking-wide">
           {title}
         </h3>
-        {/* 🎯 NUMERI PIXELATI */}
-        <div className={`${valueClasses} ${variant === "large" ? 'text-green' : 'text-magenta'} mb-4`}>
+        {/* 🎯 APPLICA LE CLASSI CORRETTE */}
+        <div className={`${valueClasses} ${shadowClass} ${textColorClass} mb-4`}>
           {formattedValue}
         </div>
         <p className="text-sm font-mono text-right-color" dangerouslySetInnerHTML={{ __html: subtitle }} />
