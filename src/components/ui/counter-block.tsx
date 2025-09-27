@@ -1,6 +1,6 @@
 interface CounterBlockProps {
   title: string;
-  value: string;
+  value: number;
   subtitle: string;
   variant?: "default" | "large";
 }
@@ -14,6 +14,14 @@ const CounterBlock = ({
   const sizeClasses = variant === "large" ? "p-8 border-2" : "p-6 border";
   const valueClasses = variant === "large" ? "text-6xl" : "text-4xl";
   
+  // 🎯 FORMATTAZIONE EURO ITALIANA CON PUNTI
+  const formattedValue = new Intl.NumberFormat('it-IT', { 
+    style: 'currency', 
+    currency: 'EUR',
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0
+  }).format(value);
+  
   return (
     <div className={`${sizeClasses} border-supercompany-dark-gray bg-muted/30 rounded-sm`}>
       <div className="text-center">
@@ -21,12 +29,10 @@ const CounterBlock = ({
           {title}
         </h3>
         <div className={`font-pixel ${valueClasses} ${variant === "large" ? 'text-green' : 'text-magenta'} mb-4`}>
-          {value}
+          {formattedValue}
         </div>
         <p className="text-sm font-mono text-right-color" dangerouslySetInnerHTML={{ __html: subtitle }} />
       </div>
     </div>
   );
 };
-
-export default CounterBlock;
