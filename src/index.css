@@ -36,37 +36,184 @@
     --card-foreground: 240 10% 3.9%;
     --radius: 0.25rem;
   }
+
+  /* Reset di base per le immagini */
+  img {
+    max-width: 100%;
+    height: auto;
+  }
 }
 
 @layer base {
-  body { font-family: var(--font-mono); }
-  h1, h2, h3, h4, h5, h6 { font-family: var(--font-pixel); }
+  body { 
+    font-family: var(--font-mono);
+    margin: 0;
+    padding: 0;
+  }
+  
+  h1, h2, h3, h4, h5, h6 { 
+    font-family: var(--font-pixel); 
+  }
 }
 
 @layer components {
   /* Layout */
-  .split-screen { @apply min-h-screen flex flex-col; }
+  .split-screen { 
+    @apply min-h-screen flex flex-col; 
+  }
+  
   .split-left {
     @apply flex-1 w-full p-8 lg:p-12 xl:p-16 flex flex-col justify-center;
     background: hsl(var(--left-bg));
     color: hsl(var(--left-text));
   }
+  
   .split-right {
     @apply flex-1 w-full p-8 lg:p-12 xl:p-16 flex flex-col justify-center;
     background: hsl(var(--right-bg));
     color: hsl(var(--right-text));
   }
+
+  /* 🎯 STILI SPECIFICI PER IL LOGO */
+  .logo-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .logo-horizontal {
+    height: 48px;
+    width: auto;
+    max-width: 180px;
+    object-fit: contain;
+    image-rendering: auto;
+  }
+
+  .logo-nav {
+    height: 48px;
+    width: auto;
+    max-width: 180px;
+    object-fit: contain;
+    image-rendering: auto;
+    filter: drop-shadow(1px 1px 0px #000);
+  }
+
+  /* Logo per schermi medi (tablet) */
+  @media (min-width: 768px) {
+    .logo-horizontal {
+      height: 52px;
+      max-width: 200px;
+    }
+    
+    .logo-nav {
+      height: 52px;
+      max-width: 200px;
+    }
+  }
+
+  /* Logo per schermi grandi (desktop) */
+  @media (min-width: 1024px) {
+    .logo-horizontal {
+      height: 56px;
+      max-width: 220px;
+    }
+    
+    .logo-nav {
+      height: 56px;
+      max-width: 220px;
+    }
+  }
+
+  /* Logo per schermi molto grandi */
+  @media (min-width: 1280px) {
+    .logo-horizontal {
+      height: 60px;
+      max-width: 240px;
+    }
+    
+    .logo-nav {
+      height: 60px;
+      max-width: 240px;
+    }
+  }
+
   /* Stili Select */
   [data-radix-select-content] {
     @apply bg-white text-black border border-black rounded-md shadow-lg z-50;
   }
+  
   [data-radix-select-item] {
     @apply px-4 py-2 hover:bg-magenta hover:text-white cursor-pointer;
   }
+  
   [data-radix-select-item][data-highlighted] {
     @apply bg-magenta text-white;
   }
+
   /* Animazione Blink */
-  @keyframes blink { 50% { opacity: 0; } }
-  .animate-blink { animation: blink 6s step-end infinite; }
+  @keyframes blink { 
+    50% { 
+      opacity: 0; 
+    } 
+  }
+  
+  .animate-blink { 
+    animation: blink 6s step-end infinite; 
+  }
+
+  /* Navigazione */
+  .nav-link {
+    @apply transition-colors duration-200;
+  }
+
+  /* Pulsanti */
+  .btn-primary {
+    @apply bg-magenta hover:bg-magenta/90 text-white font-mono border-2 border-magenta hover:border-green transition-colors;
+  }
+
+  /* Counter blocks */
+  .counter-block {
+    @apply border-supercompany-dark-gray bg-muted/30 rounded-sm;
+  }
+
+  .counter-block-large {
+    @apply p-8 border-2;
+  }
+
+  .counter-block-default {
+    @apply p-6 border;
+  }
+}
+
+@layer utilities {
+  /* Utility per testo */
+  .text-left-color {
+    color: hsl(var(--left-text));
+  }
+  
+  .text-right-color {
+    color: hsl(var(--right-text));
+  }
+  
+  .text-magenta {
+    color: hsl(var(--supercompany-magenta));
+  }
+  
+  .text-green {
+    color: hsl(var(--supercompany-green));
+  }
+
+  /* Utility per background */
+  .bg-magenta {
+    background-color: hsl(var(--supercompany-magenta));
+  }
+  
+  .bg-green {
+    background-color: hsl(var(--supercompany-green));
+  }
+
+  /* Border colors */
+  .border-supercompany-dark-gray {
+    border-color: hsl(var(--supercompany-dark-gray));
+  }
 }

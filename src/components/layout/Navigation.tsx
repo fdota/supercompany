@@ -11,19 +11,14 @@ const Navigation = () => {
   return (
     <nav className="mb-8">
       <div className="flex flex-col md:flex-row items-center md:justify-between mb-6 space-y-4 md:space-y-0">
-        {/* 🎯 LOGO CON IMMAGINE PNG */}
+        {/* 🎯 LOGO CORRETTO */}
         <Link to="/" className="flex items-center space-x-3 hover:scale-105 transition-transform duration-200">
-          {/* LOGO - SOSTITUISCI "logo.png" SE HAI DATO UN NOME DIVERSO */}
           <img 
             src="/supercompany2original.png" 
             alt="Supercompany" 
-            className="h-12 w-12" // Regola queste dimensioni se necessario
-            style={{ 
-              imageRendering: 'pixelated',
-              filter: 'drop-shadow(1px 1px 0px #000)'
-            }}
+            className="logo-nav" // 🔥 Usa la classe CSS
           />
-          {/* TESTO LOGO (OPZIONALE - PUOI RIMUOVERLO SE IL LOGO CONTIENE GIÀ IL TESTO) */}
+          {/* TESTO LOGO (OPZIONALE) */}
           <span className="font-pixel text-sm">
             <span className="text-magenta">supercompany</span>
             <span className="text-green">.it</span>
