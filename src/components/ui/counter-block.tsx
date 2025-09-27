@@ -28,7 +28,8 @@ const CounterBlock = ({
         <h3 className="font-pixel text-sm text-right-color mb-4 uppercase tracking-wide">
           {title}
         </h3>
-        <div className={`font-pixel ${valueClasses} ${variant === "large' ? 'text-green' : 'text-magenta'} mb-4`}>
+        {/* 🎯 CORREGGI QUESTA RIGA: "large" invece di "large' */}
+        <div className={`font-pixel ${valueClasses} ${variant === "large" ? 'text-green' : 'text-magenta'} mb-4`}>
           {formattedValue}
         </div>
         <p className="text-sm font-mono text-right-color" dangerouslySetInnerHTML={{ __html: subtitle }} />
@@ -37,5 +38,4 @@ const CounterBlock = ({
   );
 };
 
-// 🎯 QUESTA RIGA È FUNDAMENTALE!
-export default CounterBlock;  // ✅ ESATTO
+export default CounterBlock;
