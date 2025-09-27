@@ -15,7 +15,6 @@ export const handler = async (event) => {
   console.log('📖 FUNZIONE LETTURA CHIAMATA!');
 
   try {
-    // AUTENTICAZIONE (usa le stesse variabili d'ambiente di save-to-sheet)
     const serviceAccountAuth = new JWT({
       email: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
       key: process.env.GOOGLE_PRIVATE_KEY?.replace(/\\n/g, '\n'),
@@ -31,13 +30,23 @@ export const handler = async (event) => {
 
     const sheet = doc.sheetsByIndex[0];
     
-    // LEGGI TUTTE LE RIGHE (escludi l'header)
-    const rows = await sheet.getRows();
-    console.log(`📊 Trovate ${rows.length} righe di dati`);
+    // LEGGI TUTTI I DATI COME ARRAY SEMPLICE
+    const data = await sheet.getRows();
+    console.log(`📊 Trovate ${data.length} righe`);
 
-    // FILTRA RIGHE VUOTE E CALCOLA TOTALI
-    const righeValide = rows.filter(row => row.get('Data') && row.get('Data') !== '');
-    
+    // MOSTRA TUTTE LE COLONNE DISPONIBILI
+    if (data.length > 0) {
+      console.log('🏷️ COLONNE DISPONIBILI:', Object.keys(data[0]));
+    }
+
+    // FILTRA RIGHE VUOTE (dove c'è un nome)
+    const righeValide = data.filter(row => {
+      const nome = row.get('Nome');
+      return nome && nome !== '' && nome !== 'Nome';
+    });
+
+    console.log(`👥 Righe valide: ${righeValide.length}`);
+
     const totali = {
       investimenti: 0,
       oreLavoro: 0,
@@ -47,11 +56,22 @@ export const handler = async (event) => {
     };
 
     // CALCOLA I TOTALI
-    righeValide.forEach(row => {
+    righeValide.forEach((row, index) => {
+      // LEGGI I VALORI DIRETTAMENTE
       const investimento = parseFloat(row.get('Investimento')) || 0;
       const ore = parseFloat(row.get('Ore')) || 0;
-      const valoreOre = parseFloat(row.get('Valore Ore')) || 0;
-      const totale = parseFloat(row.get('Totale')) || 0;
+      
+      console.log(`🔢 Riga ${index + 1}:`, {
+        nome: row.get('Nome'),
+        investimentoRaw: row.get('Investimento'),
+        investimentoParsed: investimento,
+        oreRaw: row.get('Ore'),
+        oreParsed: ore
+      });
+
+      // CALCOLA
+      const valoreOre = ore * 10; // 50 ore × 10€ = 500€
+      const totale = investimento + valoreOre; // 5000€ + 500€ = 5500€
 
       totali.investimenti += investimento;
       totali.oreLavoro += ore;
@@ -59,30 +79,37 @@ export const handler = async (event) => {
       totali.totaleComplessivo += totale;
     });
 
-    console.log('💰 Totali calcolati:', totali);
+    console.log('💰 TOTALI CALCOLATI:', totali);
 
     return {
       statusCode: 200,
       headers,
       body: JSON.stringify({
         success: true,
-        data: righeValide.map(row => ({
-          data: row.get('Data'),
-          nome: row.get('Nome'),
-          email: row.get('Email'),
-          tipo: row.get('Tipo'),
-          investimento: parseFloat(row.get('Investimento')) || 0,
-          ore: parseFloat(row.get('Ore')) || 0,
-          competenza: row.get('Competenza'),
-          valoreOre: parseFloat(row.get('Valore Ore')) || 0,
-          totale: parseFloat(row.get('Totale')) || 0
-        })),
+        data: righeValide.map(row => {
+          const investimento = parseFloat(row.get('Investimento')) || 0;
+          const ore = parseFloat(row.get('Ore')) || 0;
+          const valoreOre = ore * 10;
+          const totale = investimento + valoreOre;
+          
+          return {
+            data: row.get('Data'),
+            nome: row.get('Nome'),
+            email: row.get('Email'),
+            tipo: row.get('Tipo'),
+            investimento: investimento,
+            ore: ore,
+            competenza: row.get('Competenza'),
+            valoreOre: valoreOre,
+            totale: totale
+          }
+        }),
         totali: totali
       })
     };
 
   } catch (error) {
-    console.error('❌ ERRORE LETTURA:', error);
+    console.error('❌ ERRORE:', error);
     return {
       statusCode: 500,
       headers,
