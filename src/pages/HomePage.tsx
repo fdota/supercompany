@@ -6,48 +6,22 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useState, useEffect } from "react";
+import { useSheetData } from "@/hooks/useSheetData"; // IMPORT AGGIUNTO
 
 const HomePage = () => {
   const [formData, setFormData] = useState({ name: "", email: "", contributionType: "", amount: "", hours: "", expertise: "" });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [counters, setCounters] = useState({ totalMoney: 0, totalHours: 0, totalPeople: 0, totalValue: 0 });
+  
+  // 🎯 SOSTITUITO: usa i dati REALI dal sheet invece dei contatori locali
+  const { counters, loading, refreshData } = useSheetData();
 
-  // 🎯 CARICA I DATI ESISTENTI DAL SHEET ALL'AVVIO
-  useEffect(() => {
-    const loadExistingData = async () => {
-      try {
-        console.log("📊 Caricamento dati dal Sheet...");
-        
-        // 🔧 PER ORA USIAMO UNA SOLUZIONE SEMPLICE:
-        // I dati verranno caricati quando qualcuno invia il form
-        // Più tardi creeremo una function dedicata get-counters.js
-        
-        // Simuliamo il caricamento mostrando almeno i dati locali
-        if (typeof window !== 'undefined') {
-          const savedData = localStorage.getItem('supercompany-counters');
-          if (savedData) {
-            setCounters(JSON.parse(savedData));
-          }
-        }
-      } catch (error) {
-        console.log("ℹ️ I contatori si aggiorneranno al prossimo invio");
-      }
-    };
-    loadExistingData();
-  }, []);
-
-  // 📊 AGGIORNA I CONTATORI IN TEMPO REALE DURANTE LA COMPILAZIONE
+  // 📊 MANTIENI SOLO L'ANTEPRIMA IN LOCALE (opzionale per sviluppo)
   useEffect(() => {
     if (typeof window !== 'undefined' && window.location.hostname === 'localhost') {
+      // Solo per anteprima durante lo sviluppo, non influisce sui contatori principali
       const money = parseInt(formData.amount) || 0;
       const hours = parseInt(formData.hours) || 0;
-      const hoursValue = hours * 10;
-      setCounters({
-        totalMoney: money,
-        totalHours: hours,
-        totalPeople: formData.name ? 1 : 0,
-        totalValue: money + hoursValue
-      });
+      console.log('Anteprima locale:', { money, hours }); // Solo per debug
     }
   }, [formData]);
 
@@ -66,24 +40,8 @@ const HomePage = () => {
       if (response.ok && result.success) {
         alert('✅ Grazie! La tua adesione è stata registrata con successo.');
         
-        // 🎯 AGGIORNA I CONTATORI CON I DATI REALI (PERSISTENTI)
-        const money = parseInt(formData.amount) || 0;
-        const hours = parseInt(formData.hours) || 0;
-        const hoursValue = hours * 10;
-        
-        const newCounters = {
-          totalMoney: counters.totalMoney + money,
-          totalHours: counters.totalHours + hours,
-          totalPeople: counters.totalPeople + 1,
-          totalValue: counters.totalValue + money + hoursValue
-        };
-        
-        setCounters(newCounters);
-        
-        // 💾 SALVA I CONTATORI NEL LOCALSTORAGE
-        if (typeof window !== 'undefined') {
-          localStorage.setItem('supercompany-counters', JSON.stringify(newCounters));
-        }
+        // 🎯 AGGIORNA I DATI REALI DAL SHEET (non calcolare localmente)
+        await refreshData();
         
         // 🔄 RESETTA IL FORM
         setFormData({ name: "", email: "", contributionType: "", amount: "", hours: "", expertise: "" });
@@ -126,19 +84,19 @@ const HomePage = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
           <CounterBlock 
             title="Promesse di Investimento" 
-            value={formatCurrency(counters.totalMoney)} 
-            subtitle={`Da <strong class='text-magenta'>${counters.totalPeople}</strong> persone.`} 
+            value={loading ? 0 : counters.totalMoney} 
+            subtitle={`Da <strong class='text-magenta'>${loading ? 0 : counters.totalPeople}</strong> persone.`} 
           />
           <CounterBlock 
             title="Valore Ore di Lavoro" 
-            value={formatCurrency(counters.totalHours * 10)} 
-            subtitle={`Da <strong class='text-magenta'>${counters.totalPeople}</strong> persone.`} 
+            value={loading ? 0 : counters.totalValueOre} 
+            subtitle={`Da <strong class='text-magenta'>${loading ? 0 : counters.totalPeople}</strong> persone.`} 
           />
         </div>
         <CounterBlock 
           title="Totale Promesse" 
-          value={formatCurrency(counters.totalValue)} 
-          subtitle={`Un impegno preso da <strong class='text-green'>${counters.totalPeople}</strong> persone.`} 
+          value={loading ? 0 : counters.totalValue} 
+          subtitle={`Un impegno preso da <strong class='text-green'>${loading ? 0 : counters.totalPeople}</strong> persone.`} 
           variant="large" 
         />
       </div>

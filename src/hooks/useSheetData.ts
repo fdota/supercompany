@@ -4,6 +4,7 @@ interface SheetCounters {
   totalMoney: number;
   totalHours: number;
   totalPeople: number;
+  totalValueOre: number; // 🎯 IMPORTANTE: aggiungi questa riga
   totalValue: number;
 }
 
@@ -16,6 +17,7 @@ export const useSheetData = (): {
     totalMoney: 0,
     totalHours: 0,
     totalPeople: 0,
+    totalValueOre: 0, // 🎯 AGGIUNGI ANCHE QUI
     totalValue: 0
   });
   const [loading, setLoading] = useState(true);
@@ -35,12 +37,12 @@ export const useSheetData = (): {
           totalMoney: result.totali.investimenti || 0,
           totalHours: result.totali.oreLavoro || 0,
           totalPeople: result.totali.persone || 0,
+          totalValueOre: result.totali.valoreOre || 0, // 🎯 E QUI
           totalValue: result.totali.totaleComplessivo || 0
         };
         
         setCounters(sheetCounters);
         
-        // Salva in localStorage come fallback
         if (typeof window !== 'undefined') {
           localStorage.setItem('supercompany-counters', JSON.stringify(sheetCounters));
         }
@@ -50,7 +52,6 @@ export const useSheetData = (): {
     } catch (error) {
       console.error('❌ Errore caricamento dati sheet:', error);
       
-      // Fallback: usa localStorage
       if (typeof window !== 'undefined') {
         const savedData = localStorage.getItem('supercompany-counters');
         if (savedData) {
@@ -66,7 +67,6 @@ export const useSheetData = (): {
   useEffect(() => {
     refreshData();
     
-    // Ricarica ogni 30 secondi per dati in tempo reale
     const interval = setInterval(refreshData, 30000);
     return () => clearInterval(interval);
   }, []);
