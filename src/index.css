@@ -137,6 +137,32 @@
     }
   }
 
+  /* 🎯 STILE PIXELATO PER I NUMERI DEI CONTATORI */
+  .counter-number {
+    font-family: var(--font-pixel);
+    image-rendering: pixelated;
+    text-rendering: geometricPrecision;
+    font-smooth: never;
+    -webkit-font-smoothing: none;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Stile specifico per i numeri grandi */
+  .counter-large {
+    @apply counter-number text-6xl;
+    text-shadow: 2px 2px 0px #000;
+    letter-spacing: -1px;
+    line-height: 1.2;
+  }
+
+  /* Stile per numeri medi */
+  .counter-medium {
+    @apply counter-number text-4xl;
+    text-shadow: 1px 1px 0px #000;
+    letter-spacing: -0.5px;
+    line-height: 1.3;
+  }
+
   /* Stili Select */
   [data-radix-select-content] {
     @apply bg-white text-black border border-black rounded-md shadow-lg z-50;
