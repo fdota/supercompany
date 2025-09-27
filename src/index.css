@@ -1,45 +1,213 @@
-interface CounterBlockProps {
-  title: string;
-  value: number;
-  subtitle: string;
-  variant?: "default" | "large";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --supercompany-black: 0 0% 0%;
+    --supercompany-white: 0 0% 100%;
+    --supercompany-magenta: 300 100% 50%;
+    --supercompany-green: 120 100% 50%;
+    --supercompany-dark-gray: 0 0% 6.7%;
+    --left-bg: var(--supercompany-black);
+    --left-text: var(--supercompany-white);
+    --right-bg: var(--supercompany-white);
+    --right-text: var(--supercompany-dark-gray);
+    --font-pixel: 'Press Start 2P', cursive;
+    --font-mono: 'Fira Code', monospace;
+    --border: 240 5.9% 90%;
+    --input: 240 5.9% 90%;
+    --ring: 240 5.9% 10%;
+    --background: 0 0% 100%;
+    --foreground: 240 10% 3.9%;
+    --primary: 240 5.9% 10%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 240 4.8% 95.9%;
+    --secondary-foreground: 240 5.9% 10%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --muted: 240 4.8% 95.9%;
+    --muted-foreground: 240 3.8% 46.1%;
+    --accent: 240 4.8% 95.9%;
+    --accent-foreground: 240 5.9% 10%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 3.9%;
+    --radius: 0.25rem;
+  }
+
+  /* Reset di base per le immagini */
+  img {
+    max-width: 100%;
+    height: auto;
+  }
 }
 
-const CounterBlock = ({  
-  title,  
-  value,  
-  subtitle,  
-  variant = "default"
-}: CounterBlockProps) => {
-  const sizeClasses = variant === "large" ? "p-8 border-2" : "p-6 border";
-  const valueClasses = variant === "large" ? "counter-large" : "counter-medium";
+@layer base {
+  body { 
+    font-family: var(--font-mono);
+    margin: 0;
+    padding: 0;
+  }
   
-  // 🎯 CLASSI OMBRA CORRETTE
-  const shadowClass = variant === "large" ? "text-shadow-green" : "text-shadow-none";
-  const textColorClass = variant === "large" ? "text-green" : "text-magenta";
-  
-  // FORMATTAZIONE EURO ITALIANA
-  const formattedValue = new Intl.NumberFormat('it-IT', { 
-    style: 'currency', 
-    currency: 'EUR',
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 0
-  }).format(value);
-  
-  return (
-    <div className={`${sizeClasses} border-supercompany-dark-gray bg-muted/30 rounded-sm`}>
-      <div className="text-center">
-        <h3 className="font-pixel text-sm text-right-color mb-4 uppercase tracking-wide">
-          {title}
-        </h3>
-        {/* 🎯 APPLICA LE CLASSI CORRETTE */}
-        <div className={`${valueClasses} ${shadowClass} ${textColorClass} mb-4`}>
-          {formattedValue}
-        </div>
-        <p className="text-sm font-mono text-right-color" dangerouslySetInnerHTML={{ __html: subtitle }} />
-      </div>
-    </div>
-  );
-};
+  h1, h2, h3, h4, h5, h6 { 
+    font-family: var(--font-pixel); 
+  }
+}
 
-export default CounterBlock;
+@layer components {
+  /* Layout */
+  .split-screen { 
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .split-left {
+    flex: 1;
+    width: 100%;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: hsl(var(--left-bg));
+    color: hsl(var(--left-text));
+  }
+  
+  .split-right {
+    flex: 1;
+    width: 100%;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: hsl(var(--right-bg));
+    color: hsl(var(--right-text));
+  }
+
+  /* Logo styles */
+  .logo-nav {
+    height: 48px;
+    width: auto;
+    max-width: 180px;
+    object-fit: contain;
+    image-rendering: auto;
+    filter: drop-shadow(1px 1px 0px #000);
+  }
+
+  /* Counter styles */
+  .counter-number {
+    font-family: var(--font-pixel);
+    image-rendering: pixelated;
+    text-rendering: geometricPrecision;
+    -webkit-font-smoothing: none;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  .text-shadow-none {
+    text-shadow: none;
+  }
+
+  .text-shadow-green {
+    text-shadow: 2px 2px 0px hsl(var(--supercompany-green));
+  }
+
+  .counter-large {
+    font-size: 3.75rem;
+    line-height: 1;
+    letter-spacing: -1px;
+  }
+
+  .counter-medium {
+    font-size: 2.25rem;
+    line-height: 2.5rem;
+    letter-spacing: -0.5px;
+  }
+
+  /* Form styles */
+  .form-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .required-field::after {
+    content: " *";
+    color: hsl(var(--supercompany-magenta));
+  }
+
+  /* Animazioni */
+  @keyframes blink { 
+    50% { 
+      opacity: 0; 
+    } 
+  }
+  
+  .animate-blink { 
+    animation: blink 6s step-end infinite; 
+  }
+}
+
+@layer utilities {
+  .text-left-color {
+    color: hsl(var(--left-text));
+  }
+  
+  .text-right-color {
+    color: hsl(var(--right-text));
+  }
+  
+  .text-magenta {
+    color: hsl(var(--supercompany-magenta));
+  }
+  
+  .text-green {
+    color: hsl(var(--supercompany-green));
+  }
+
+  .border-supercompany-dark-gray {
+    border-color: hsl(var(--supercompany-dark-gray));
+  }
+}
+
+/* Responsive */
+@media (min-width: 768px) {
+  .split-left,
+  .split-right {
+    padding: 3rem;
+  }
+  
+  .logo-nav {
+    height: 52px;
+    max-width: 200px;
+  }
+  
+  .form-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .split-left,
+  .split-right {
+    padding: 4rem;
+  }
+  
+  .logo-nav {
+    height: 56px;
+    max-width: 220px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .split-left,
+  .split-right {
+    padding: 4rem;
+  }
+  
+  .logo-nav {
+    height: 60px;
+    max-width: 240px;
+  }
+}
