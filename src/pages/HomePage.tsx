@@ -1,6 +1,6 @@
 // src/pages/HomePage.tsx
 
-import { Link } from "react-router-dom"; // <-- ECCO LA RIGA MANCANTE
+import { Link } from "react-router-dom";
 import SplitLayout from "@/components/layout/SplitLayout";
 import Navigation from "@/components/layout/Navigation";
 import CounterBlock from "@/components/ui/counter-block";
@@ -161,4 +161,22 @@ const HomePage = () => {
             </div>
           )}
           <div className="flex items-start space-x-2 p-4 bg-gray-100 rounded border">
-            <input type="checkbox" id="privacy-consent" checked={privacyConsent} onChange={(e) => setPrivacyConsent(e.target.checked
+            {/* LA PARENTESI MANCANTE È STATA AGGIUNTA QUI SOTTO */}
+            <input type="checkbox" id="privacy-consent" checked={privacyConsent} onChange={(e) => setPrivacyConsent(e.target.checked)} required className="mt-1" />
+            <label htmlFor="privacy-consent" className="text-sm text-gray-700">
+              Acconsento al trattamento dei dati secondo la{' '}
+              <Link to="/privacy" className="text-magenta hover:underline font-bold">Privacy Policy</Link>
+            </label>
+          </div>
+          <Button type="submit" disabled={isSubmitting} className="w-full bg-magenta hover:bg-magenta/90 text-white font-mono border-2 border-magenta hover:border-green transition-colors">
+            {isSubmitting ? 'Invio in corso...' : '> Manifesta Interesse'}
+          </Button>
+        </form>
+      </div>
+    </div>
+  );
+
+  return <SplitLayout leftContent={leftContent} rightContent={rightContent} />;
+};
+
+export default HomePage;
