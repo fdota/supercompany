@@ -1,7 +1,7 @@
 // src/pages/FaqPage.tsx
 
 import SplitLayout from "@/components/layout/SplitLayout";
-import Navigation from "@/components/layout/Navigation"; // <-- Importa Navigation
+// import Navigation from "@/components/layout/Navigation"; // <-- RIMOSSO
 
 const faqData = [
   {
@@ -24,12 +24,10 @@ const faqData = [
 
 const FaqPage = () => {
   const leftContent = (
-    <>
-      <Navigation /> {/* <-- Navigation va qui dentro */}
-      <div className="flex flex-col justify-center h-full items-center p-4">
-        <h1 className="font-pixel text-4xl text-green">Faq</h1>
-      </div>
-    </>
+    // <Navigation /> <-- RIMOSSO
+    <div className="flex flex-col justify-center h-full items-center p-4">
+      <h1 className="font-pixel text-4xl text-green">Faq</h1>
+    </div>
   );
 
   const rightContent = (

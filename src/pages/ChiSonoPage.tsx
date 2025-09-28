@@ -1,25 +1,23 @@
 // src/pages/ChiSonoPage.tsx
 
 import SplitLayout from "@/components/layout/SplitLayout";
-import Navigation from "@/components/layout/Navigation"; // <-- Importa Navigation
+// import Navigation from "@/components/layout/Navigation"; // <-- RIMOSSO
 
 const ChiSonoPage = () => {
   const leftContent = (
-    <>
-      <Navigation /> {/* <-- Navigation va qui dentro */}
-      <div className="flex flex-col justify-center h-full p-4">
-        <h1 className="font-pixel text-3xl lg:text-4xl text-magenta mb-8 leading-relaxed text-center lg:text-right">
-          Chi sono
-        </h1>
-        <div className="flex justify-center">
-          <div className="w-64 h-64 bg-supercompany-white/10 border-2 border-supercompany-magenta rounded-lg flex items-center justify-center">
-            <span className="text-supercompany-magenta font-mono text-sm">
-              [foto_fabio.jpg]
-            </span>
-          </div>
+    // <Navigation /> <-- RIMOSSO
+    <div className="flex flex-col justify-center h-full p-4">
+      <h1 className="font-pixel text-3xl lg:text-4xl text-magenta mb-8 leading-relaxed text-center lg:text-right">
+        Chi sono
+      </h1>
+      <div className="flex justify-center">
+        <div className="w-64 h-64 bg-supercompany-white/10 border-2 border-supercompany-magenta rounded-lg flex items-center justify-center">
+          <span className="text-supercompany-magenta font-mono text-sm">
+            [foto_fabio.jpg]
+          </span>
         </div>
       </div>
-    </>
+    </div>
   );
 
   const rightContent = (
