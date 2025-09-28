@@ -1,15 +1,14 @@
 // src/App.tsx
 
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import HomePage from "@/pages/HomePage";
-import ChiSonoPage from "@/pages/ChiSonoPage";
-import FaqPage from "@/pages/FaqPage";
-import PrivacyPolicy from "@/pages/PrivacyPolicy";
-import NotFound from "@/pages/NotFound";
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import HomePage from './pages/HomePage';
+import ChiSonoPage from './pages/ChiSonoPage';
+import FaqPage from './pages/FaqPage';
+import PrivacyPolicy from './pages/PrivacyPolicy';
+import NotFound from './pages/NotFound';
 
+// App.tsx DEVE contenere solo il router. Niente elementi visivi.
 function App() {
-  // Questo componente ora gestisce SOLO il routing.
-  // Il layout è delegato a ogni singola pagina.
   return (
     <Router>
       <Routes>

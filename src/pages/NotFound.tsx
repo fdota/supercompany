@@ -1,13 +1,13 @@
 // src/pages/NotFound.tsx
 
 import SplitLayout from "@/components/layout/SplitLayout";
-import Navigation from "@/components/layout/Navigation"; // <-- AGGIUNTO
-import { Link } from "react-router-dom"; // <-- AGGIUNTO
+import Navigation from "@/components/layout/Navigation"; // <-- Importa Navigation
+import { Link } from "react-router-dom";
 
 const NotFound = () => {
   const leftContent = (
     <>
-      <Navigation /> {/* <-- AGGIUNTO */}
+      <Navigation /> {/* <-- Navigation va qui dentro */}
       <div className="flex flex-col justify-center h-full text-center p-4">
         <h1 className="font-pixel text-4xl text-magenta mb-8">404</h1>
         <p className="font-mono text-left-color mb-8">Pagina non trovata</p>

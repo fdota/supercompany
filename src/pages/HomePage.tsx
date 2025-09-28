@@ -2,7 +2,7 @@
 
 import { Link } from "react-router-dom";
 import SplitLayout from "@/components/layout/SplitLayout";
-import Navigation from "@/components/layout/Navigation";
+import Navigation from "@/components/layout/Navigation"; // <-- Navigation è qui!
 import CounterBlock from "@/components/ui/counter-block";
 import TypewriterText from "@/components/ui/typewriter-text";
 import { Button } from "@/components/ui/button";
@@ -77,9 +77,10 @@ const HomePage = () => {
           Se da solo non riesci, <span className="text-green italic">insieme</span> si può.
         </h2>
         <div className="font-mono text-sm lg:text-base text-left-color leading-relaxed space-y-4 max-w-md mx-auto text-center italic">
-          <p>Ciao, mi chiamo Fabio e sto creando una community per avviare un progetto imprenditoriale collaborativo. Da soli è difficile, le risorse non bastano mai.</p>
-          <p>Qui puoi manifestare il tuo interesse a partecipare, con competenze o con una stima di supporto economico futuro. Ogni contributo è un mattone per costruire qualcosa di grande.</p>
-          <p className="text-magenta">Guarda i nostri progressi e, se vuoi, unisciti alla discussione!</p>
+          <p>Ciao a tutti, mi chiamo Fabio e sto cercando di creare una comunita' di persone che vogliano aprire un'azienda vincente assieme. E' difficile farcela da soli. I soldi e le competenze non bastano mai.</p>
+          <p>Per questo ho pensato a questa Super Company, una super azienda che parte dalla coesione per diventare grande. Qui puoi indicare il tuo potenziale contributo, che sia in danaro o in lavoro (se scegli le ore, ti chiederemo anche la tua area di competenza).</p>
+          <p>Unire piu' persone insieme per aprire un'azienda e' un'idea che avevo fin da bambino. Se non riusciro' potro' dire di averci almeno provato. Se invece funzionera' sara' la mia piu' grande soddisfazione!</p>
+          <p className="text-magenta">Guarda i nostri progressi, e se vuoi, unisciti a noi!</p>
         </div>
       </div>
     </>
@@ -151,8 +152,8 @@ const HomePage = () => {
           {(formData.contributionType === "time" || formData.contributionType === "both") && (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <Label htmlFor="hours" className="required-field">Ore stimate</Label>
-                <Input id="hours" name="hours" type="number" value={formData.hours} onChange={(e) => setFormData(prev => ({ ...prev, hours: e.target.value }))} min="1" placeholder="Ore settimanali" required />
+                <Label htmlFor="hours" className="required-field">Ore totali stimate</Label>
+                <Input id="hours" name="hours" type="number" value={formData.hours} onChange={(e) => setFormData(prev => ({ ...prev, hours: e.target.value }))} min="1" placeholder="Ore totali" required />
               </div>
               <div>
                 <Label htmlFor="expertise">Competenze</Label>
@@ -161,7 +162,6 @@ const HomePage = () => {
             </div>
           )}
           <div className="flex items-start space-x-2 p-4 bg-gray-100 rounded border">
-            {/* LA PARENTESI MANCANTE È STATA AGGIUNTA QUI SOTTO */}
             <input type="checkbox" id="privacy-consent" checked={privacyConsent} onChange={(e) => setPrivacyConsent(e.target.checked)} required className="mt-1" />
             <label htmlFor="privacy-consent" className="text-sm text-gray-700">
               Acconsento al trattamento dei dati secondo la{' '}
