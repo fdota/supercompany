@@ -5,6 +5,7 @@
 [build.environment]
   NODE_VERSION = "18"
 
+# 👇 QUESTE SONO LE REDIRECT CORRETTE PER SITO ONLINE
 [[redirects]]
   from = "/api/*"
   to = "/.netlify/functions/:splat"
