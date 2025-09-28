@@ -6,12 +6,13 @@ const Navigation = () => {
     { path: "/", label: "home" },
     { path: "/chi-sono", label: "chi_sono" },
     { path: "/faq", label: "faq" },
+    { path: "/privacy-policy.html", label: "privacy" } // 👈 NUOVO
   ];
 
   return (
     <nav className="mb-8">
       <div className="flex flex-col md:flex-row items-center md:justify-between mb-6 space-y-4 md:space-y-0">
-        {/* 🎯 LOGO SENZA SCRITTA TESTO */}
+        {/* LOGO */}
         <Link to="/" className="flex items-center hover:scale-105 transition-transform duration-200">
           <img 
             src="/supercompany2original.png" 

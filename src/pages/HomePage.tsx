@@ -6,28 +6,56 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useState, useEffect } from "react";
-import { useSheetData } from "@/hooks/useSheetData"; // IMPORT AGGIUNTO
+import { useSheetData } from "@/hooks/useSheetData";
 
 const HomePage = () => {
   const [formData, setFormData] = useState({ name: "", email: "", contributionType: "", amount: "", hours: "", expertise: "" });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [privacyConsent, setPrivacyConsent] = useState(false);
+  const [formErrors, setFormErrors] = useState<string[]>([]); // 👈 NUOVO per errori
   
-  // 🎯 SOSTITUITO: usa i dati REALI dal sheet invece dei contatori locali
   const { counters, loading, refreshData } = useSheetData();
 
-  // 📊 MANTIENI SOLO L'ANTEPRIMA IN LOCALE (opzionale per sviluppo)
-  useEffect(() => {
-    if (typeof window !== 'undefined' && window.location.hostname === 'localhost') {
-      // Solo per anteprima durante lo sviluppo, non influisce sui contatori principali
-      const money = parseInt(formData.amount) || 0;
-      const hours = parseInt(formData.hours) || 0;
-      console.log('Anteprima locale:', { money, hours }); // Solo per debug
+  // 👈 NUOVO: Funzione di validazione
+  const validateForm = () => {
+    const errors: string[] = [];
+    
+    if (!formData.name.trim()) errors.push("Il nome è obbligatorio");
+    if (!formData.email.trim()) errors.push("L'email è obbligatoria");
+    if (!formData.contributionType) errors.push("Seleziona il tipo di contributo");
+    if (!privacyConsent) errors.push("Devi accettare la Privacy Policy");
+    
+    // Validazione campi condizionali
+    if (formData.contributionType === "money" || formData.contributionType === "both") {
+      if (!formData.amount || parseInt(formData.amount) <= 0) {
+        errors.push("Inserisci una stima dell'interesse economico");
+      }
     }
-  }, [formData]);
+    
+    if (formData.contributionType === "time" || formData.contributionType === "both") {
+      if (!formData.hours || parseInt(formData.hours) <= 0) {
+        errors.push("Inserisci una stima della disponibilità oraria");
+      }
+      if (!formData.expertise.trim()) {
+        errors.push("Indica le tue competenze principali");
+      }
+    }
+    
+    setFormErrors(errors);
+    return errors.length === 0;
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // 👈 NUOVO: Validazione prima di inviare
+    if (!validateForm()) {
+      return;
+    }
+    
     setIsSubmitting(true);
+    setFormErrors([]); // Reset errori
+    
     try {
       const response = await fetch('/.netlify/functions/save-to-sheet', {
         method: 'POST',
@@ -40,11 +68,11 @@ const HomePage = () => {
       if (response.ok && result.success) {
         alert('✅ Grazie! La tua adesione è stata registrata con successo.');
         
-        // 🎯 AGGIORNA I DATI REALI DAL SHEET (non calcolare localmente)
         await refreshData();
         
-        // 🔄 RESETTA IL FORM
+        // Reset form
         setFormData({ name: "", email: "", contributionType: "", amount: "", hours: "", expertise: "" });
+        setPrivacyConsent(false);
         
       } else {
         const errorMessage = result.error || 'Errore sconosciuto dal server.';
@@ -70,10 +98,10 @@ const HomePage = () => {
         Se da solo non riesci, <span className="text-green italic">insieme</span> si può.
       </h2>
       <div className="font-mono text-sm lg:text-base text-left-color leading-relaxed space-y-4 max-w-md mx-auto text-center italic">
-        <p>Ciao a tutti, mi chiamo Fabio e sto cercando di creare una comunita' di persone che vogliano aprire un'azienda vincente assieme. E' difficile farcela da soli. I soldi e le competenze non bastano mai.</p>
-        <p>Per questo ho pensato a questa Super Company, una super azienda che parte dalla coesione per diventare grande. Qui puoi indicare il tuo potenziale contributo, che sia in danaro o in lavoro (se scegli le ore, ti chiederemo anche la tua area di competenza).</p>
-        <p>Unire piu' persone insieme per aprire un'azienda e' un'idea che avevo fin da bambino. Se non riusciro' potro' dire di averci almeno provato. Se invece funzionera' sara' la mia piu' grande soddisfazione!</p>
-        <p className="text-magenta">Guarda i nostri progressi, e se vuoi, unisciti a noi!</p>
+        <p>Ciao a tutti, mi chiamo Fabio e sto cercando di creare una community di persone che vogliano collaborare per un progetto imprenditoriale. È difficile farcela da soli. Le competenze e le risorse non bastano mai.</p>
+        <p>Per questo ho pensato a questa iniziativa collaborativa, un progetto che parte dalla coesione per diventare grande. Qui puoi indicare il tuo potenziale interesse a partecipare, che sia in termini di competenze o di eventuale supporto futuro.</p>
+        <p>Collaborare insieme per sviluppare un'idea imprenditoriale è un sogno che avevo fin da bambino. Se non riuscirò potrò dire di averci almeno provato. Se invece funzionerà sarà la mia più grande soddisfazione!</p>
+        <p className="text-magenta">Guarda i nostri progressi, e se vuoi, unisciti alla discussione!</p>
       </div>
     </div>
   );
@@ -83,29 +111,42 @@ const HomePage = () => {
       <div className="mb-12">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
           <CounterBlock 
-            title="Promesse di Investimento" 
-            value={loading ? 0 : counters.totalMoney} 
-            subtitle={`Da <strong class='text-magenta'>${loading ? 0 : counters.totalPeople}</strong> persone.`} 
+            title="Futuri Possibili Investitori" 
+            value={loading ? 0 : counters.totalPeople} 
+            subtitle={`Persone interessate a valutare un investimento futuro.`} 
           />
           <CounterBlock 
-            title="Valore Ore di Lavoro" 
+            title="Ore di Competenze Offerte" 
             value={loading ? 0 : counters.totalValueOre} 
-            subtitle={`Da <strong class='text-magenta'>${loading ? 0 : counters.totalPeople}</strong> persone.`} 
+            subtitle={`Tempo e skill messi a disposizione dalla community.`} 
           />
         </div>
         <CounterBlock 
-          title="Totale Promesse" 
+          title="Interesse di Investimento Potenziale" 
           value={loading ? 0 : counters.totalValue} 
-          subtitle={`Un impegno preso da <strong class='text-green'>${loading ? 0 : counters.totalPeople}</strong> persone.`} 
+          subtitle={`Stima aggregata e non vincolante. <strong class='text-green'>Non costituisce un impegno finanziario.</strong>`} 
           variant="large" 
         />
       </div>
       <div className="relative z-10">
-        <h3 className="font-pixel text-xl text-right-color mb-6">Ora tocca a te.</h3>
+        <h3 className="font-pixel text-xl text-right-color mb-6">Unisciti alla Discussione</h3>
+        
+        {/* 👈 NUOVO: Mostra errori di validazione */}
+        {formErrors.length > 0 && (
+          <div className="mb-6 p-4 bg-red-100 border border-red-400 rounded">
+            <h4 className="font-pixel text-red-600 mb-2">Correggi i seguenti errori:</h4>
+            <ul className="list-disc list-inside text-sm">
+              {formErrors.map((error, index) => (
+                <li key={index} className="text-red-600">{error}</li>
+              ))}
+            </ul>
+          </div>
+        )}
+        
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <Label htmlFor="name">Nome</Label>
+              <Label htmlFor="name" className="required-field">Nome</Label>
               <Input 
                 id="name" 
                 name="name" 
@@ -115,7 +156,7 @@ const HomePage = () => {
               />
             </div>
             <div>
-              <Label htmlFor="email">Email</Label>
+              <Label htmlFor="email" className="required-field">Email</Label>
               <Input 
                 id="email" 
                 name="email" 
@@ -127,7 +168,7 @@ const HomePage = () => {
             </div>
           </div>
           <div>
-            <Label htmlFor="contributionType">Tipo di contributo</Label>
+            <Label htmlFor="contributionType" className="required-field">Tipo di contributo</Label>
             <Select 
               name="contributionType" 
               value={formData.contributionType} 
@@ -137,62 +178,95 @@ const HomePage = () => {
                 <SelectValue placeholder="Seleziona..." />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="money">Investimento</SelectItem>
-                <SelectItem value="time">Ore</SelectItem>
+                <SelectItem value="money">Interesse economico futuro</SelectItem>
+                <SelectItem value="time">Competenze e tempo</SelectItem>
                 <SelectItem value="both">Entrambi</SelectItem>
               </SelectContent>
             </Select>
           </div>
+          
           {(formData.contributionType === "money" || formData.contributionType === "both") && (
             <div>
-              <Label htmlFor="amount">Importo (€)</Label>
+              <Label htmlFor="amount" className="required-field">Stima interesse economico (€)</Label>
               <Input 
                 id="amount" 
                 name="amount" 
                 type="number" 
                 value={formData.amount} 
                 onChange={(e) => setFormData(prev => ({ ...prev, amount: e.target.value }))} 
-                min="0" 
+                min="1" 
+                placeholder="Inserisci una stima approssimativa"
+                required
               />
+              <p className="text-xs text-gray-500 mt-1">
+                💡 Anche una stima approssimativa ci aiuta a valutare il progetto
+              </p>
             </div>
           )}
+          
           {(formData.contributionType === "time" || formData.contributionType === "both") && (
             <>
               <div>
-                <Label htmlFor="hours">Ore</Label>
+                <Label htmlFor="hours" className="required-field">Stima disponibilità oraria</Label>
                 <Input 
                   id="hours" 
                   name="hours" 
                   type="number" 
                   value={formData.hours} 
                   onChange={(e) => setFormData(prev => ({ ...prev, hours: e.target.value }))} 
-                  min="0" 
+                  min="1" 
+                  placeholder="Ore settimanali stimate"
+                  required
                 />
+                <p className="text-xs text-gray-500 mt-1">
+                  ⏱️ Indicativo per organizzare le risorse
+                </p>
               </div>
               <div>
-                <Label htmlFor="expertise">Competenza</Label>
+                <Label htmlFor="expertise" className="required-field">Competenze principali</Label>
                 <Input 
                   id="expertise" 
                   name="expertise" 
                   value={formData.expertise} 
                   onChange={(e) => setFormData(prev => ({ ...prev, expertise: e.target.value }))} 
-                  placeholder="es. Marketing..." 
+                  placeholder="es. Marketing, Sviluppo, Design, Vendite..." 
+                  required
                 />
               </div>
             </>
           )}
+          
+          {/* CHECKBOX PRIVACY POLICY */}
+          <div className="flex items-start space-x-2 p-4 bg-gray-100 rounded border">
+            <input 
+              type="checkbox" 
+              id="privacy-consent"
+              checked={privacyConsent}
+              onChange={(e) => setPrivacyConsent(e.target.checked)}
+              required
+              className="mt-1"
+            />
+            <label htmlFor="privacy-consent" className="text-sm text-gray-700">
+              Acconsento al trattamento dei dati personali secondo la{' '}
+              <a href="/privacy-policy.html" target="_blank" className="text-magenta hover:underline font-bold">
+                Privacy Policy
+              </a>
+            </label>
+          </div>
+          
           <Button 
             type="submit" 
             disabled={isSubmitting} 
             className="w-full bg-magenta hover:bg-magenta/90 text-white font-mono border-2 border-magenta hover:border-green transition-colors"
           >
-            {isSubmitting ? 'Invio in corso...' : '> Unisciti Ora'}
+            {isSubmitting ? 'Invio in corso...' : '> Manifesta Interesse'}
           </Button>
         </form>
+        
         <div className="mt-12 text-center">
           <h4 className="font-pixel text-md mb-4">Aiutaci a crescere.</h4>
           <div className="flex justify-center space-x-4">
-            <a href="https://wa.me/?text=Ehi,%20dai%20un'occhiata%20a%20Supercompany!%20Un%20progetto%20per%20creare%20un'azienda%20tutti%20insieme%20partendo%20da%20zero.%20Il%20sito%20%C3%A8%20supercompany.it" 
+            <a href="https://wa.me/?text=Ehi,%20dai%20un'occhiata%20a%20questo%20progetto%20collaborativo!%20Un%20iniziativa%20per%20creare%20un%20progetto%20imprenditoriale%20tutti%20insieme.%20Il%20sito%20%C3%A8%20supercompany.it" 
                target="_blank" 
                rel="noopener noreferrer" 
                className="text-green hover:text-magenta transition-colors"
@@ -213,7 +287,7 @@ const HomePage = () => {
             >
               FACEBOOK
             </a>
-            <a href="https://twitter.com/intent/tweet?url=https://supercompany.it&text=Ehi,%20scopri%20Supercompany!%20Un%20progetto%20per%20creare%20un'azienda%20tutti%20insieme." 
+            <a href="https://twitter.com/intent/tweet?url=https://supercompany.it&text=Ehi,%20scopri%20questo%20progetto%20collaborativo!%20Un%20iniziativa%20per%20creare%20un%20progetto%20imprenditoriale%20tutti%20insieme." 
                target="_blank" 
                rel="noopener noreferrer" 
                className="text-green hover:text-magenta transition-colors"
