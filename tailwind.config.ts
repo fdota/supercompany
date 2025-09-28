@@ -1,8 +1,14 @@
+// tailwind.config.js
+
 import type { Config } from "tailwindcss";
 
 export default {
   darkMode: ["class"],
-  content: ["./pages/**/*.{ts,tsx}", "./components/**/*.{ts,tsx}", "./app/**/*.{ts,tsx}", "./src/**/*.{ts,tsx}"],
+  // QUESTA È LA SEZIONE CORRETTA
+  content: [
+    "./index.html",
+    "./src/**/*.{js,ts,jsx,tsx}", // Scansiona TUTTI i file necessari dentro la cartella src
+  ],
   prefix: "",
   theme: {
     container: {
