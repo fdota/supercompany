@@ -2,20 +2,16 @@
   command = "npm run build"
   publish = "dist"
 
-[build]
-  command = "npm run build"
-  publish = "dist"
-
 [build.environment]
   NODE_VERSION = "18"
 
-# Redirect TUTTE le pagine alla maintenance
+# Redirect per manutenzione
 [[redirects]]
   from = "/*"
   to = "/maintenance.html"
   status = 200
 
-# Escludi i file statici (CSS, JS, immagini)
+# Escludi i file statici dalla redirect
 [[redirects]]
   from = "/assets/*"
   to = "/assets/:splat"
@@ -44,3 +40,11 @@
 [functions]
   directory = "netlify/functions"
   node_bundler = "esbuild"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
