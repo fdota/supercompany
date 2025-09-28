@@ -1,20 +1,34 @@
 [build]
   command = "npm run build"
   publish = "dist"
-  functions = "netlify/functions"
 
-# Redirect per le funzioni
-[[redirects]]
-  from = "/api/*"
-  to = "/.netlify/functions/:splat"
-  status = 200
-  force = true
+[build.environment]
+  NODE_VERSION = "18"
 
-# Redirect SPA
 [[redirects]]
   from = "/*"
-  to = "/index.html"
+  to = "/maintenance.html"
   status = 200
 
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+# Configurazione per le funzioni
 [functions]
+  directory = "netlify/functions"
   node_bundler = "esbuild"
+
+# Configurazione per il dominio (quando sarai pronto)
+# [context.production.environment]
+#   NODE_ENV = "production"
+
+# [context.deploy-preview.environment]
+#   NODE_ENV = "development"
+
+# [context.branch-deploy.environment]
+#   NODE_ENV = "development"
