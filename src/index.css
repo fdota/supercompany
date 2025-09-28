@@ -137,6 +137,20 @@
     color: hsl(var(--supercompany-magenta));
   }
 
+  /* === NUOVO CODICE AGGIUNTO QUI === */
+  /* Nasconde le frecce dai campi numerici in Chrome, Safari, Edge */
+  input[type='number']::-webkit-outer-spin-button,
+  input[type='number']::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  /* Nasconde le frecce dai campi numerici in Firefox */
+  input[type='number'] {
+    -moz-appearance: textfield;
+  }
+  /* === FINE NUOVO CODICE === */
+
   /* Animazioni */
   @keyframes blink { 
     50% { 

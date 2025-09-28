@@ -1,28 +1,35 @@
+// src/components/ui/counter-block.tsx
+
 interface CounterBlockProps {
   title: string;
   value: number;
   subtitle: string;
   variant?: "default" | "large";
+  isCurrency: boolean; // Aggiunto questo campo
 }
 
-const CounterBlock = ({  
-  title,  
-  value,  
-  subtitle,  
-  variant = "default"
+const CounterBlock = ({
+  title,
+  value,
+  subtitle,
+  variant = "default",
+  isCurrency, // Aggiunto questo campo
 }: CounterBlockProps) => {
   const sizeClasses = variant === "large" ? "p-8 border-2" : "p-6 border";
   const valueClasses = variant === "large" ? "counter-large" : "counter-medium";
   const shadowClass = variant === "large" ? "text-shadow-green" : "text-shadow-none";
   const textColorClass = variant === "large" ? "text-green" : "text-magenta";
-  
-  const formattedValue = new Intl.NumberFormat('it-IT', { 
-    style: 'currency', 
-    currency: 'EUR',
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 0
-  }).format(value);
-  
+
+  // Formatta il valore solo se è una valuta
+  const formattedValue = isCurrency
+    ? new Intl.NumberFormat('it-IT', {
+        style: 'currency',
+        currency: 'EUR',
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0,
+      }).format(value)
+    : value.toString();
+
   return (
     <div className={`${sizeClasses} border-supercompany-dark-gray bg-muted/30 rounded-sm`}>
       <div className="text-center">
