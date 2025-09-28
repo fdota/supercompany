@@ -6,7 +6,7 @@ const Navigation = () => {
     { path: "/", label: "home" },
     { path: "/chi-sono", label: "chi_sono" },
     { path: "/faq", label: "faq" },
-    { path: "/privacy-policy.html", label: "privacy" } // 👈 NUOVO
+    { path: "/privacy-policy.html", label: "privacy" }
   ];
 
   return (

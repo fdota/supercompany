@@ -17,6 +17,6 @@ export default defineConfig({
     outDir: "dist",
     emptyOutDir: true,
   },
-  // CAMBIA QUESTA RIGA:
-  base: "/", 
+  base: "/",
+  publicDir: false // 👈 DISABILITA LA CARTELLA PUBLIC
 });
