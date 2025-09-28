@@ -1,6 +1,9 @@
+// src/pages/ChiSonoPage.tsx
+
 import SplitLayout from "@/components/layout/SplitLayout";
 
-const ChiSono = () => {
+// MODIFICATO QUI: da "ChiSono" a "ChiSonoPage"
+const ChiSonoPage = () => {
   const leftContent = (
     <div className="flex flex-col justify-center h-full">
       <h1 className="font-pixel text-3xl lg:text-4xl text-magenta mb-8 leading-relaxed">
@@ -80,4 +83,5 @@ const ChiSono = () => {
   return <SplitLayout leftContent={leftContent} rightContent={rightContent} />;
 };
 
-export default ChiSono;
+// MODIFICATO QUI: da "ChiSono" a "ChiSonoPage"
+export default ChiSonoPage;
