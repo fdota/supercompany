@@ -6,7 +6,6 @@ const Navigation = () => {
   return (
     <nav className="mb-8">
       <div className="flex flex-col md:flex-row items-center md:justify-between mb-6 space-y-4 md:space-y-0">
-        {/* LOGO */}
         <Link to="/" className="flex items-center hover:scale-105 transition-transform duration-200">
           <img 
             src="/supercompany2original.png" 
@@ -15,7 +14,6 @@ const Navigation = () => {
           />
         </Link>
         
-        {/* MENU NAVIGAZIONE */}
         <ul className="flex space-x-6">
           <li>
             <Link 
