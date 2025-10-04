@@ -1,7 +1,4 @@
-// src/pages/FaqPage.tsx
-
-import SplitLayout from "@/components/layout/SplitLayout";
-// import Navigation from "@/components/layout/Navigation"; // <-- RIMOSSO
+import Navigation from "@/components/layout/Navigation";
 
 const faqData = [
   {
@@ -23,27 +20,43 @@ const faqData = [
 ];
 
 const FaqPage = () => {
-  const leftContent = (
-    // <Navigation /> <-- RIMOSSO
-    <div className="flex flex-col justify-center h-full items-center p-4">
-      <h1 className="font-pixel text-4xl text-green">Faq</h1>
-    </div>
-  );
+  return (
+    <div className="vertical-layout">
+      {/* SEZIONE NAVIGAZIONE CON SFONDO NERO */}
+      <section className="section-navigation-black">
+        <Navigation />
+      </section>
 
-  const rightContent = (
-    <div className="flex flex-col justify-center h-full p-4">
-      <div className="space-y-8 max-w-md mx-auto">
-        {faqData.map((item, index) => (
-          <div key={index}>
-            <h3 className="font-pixel text-lg text-magenta mb-2">{item.question}</h3>
-            <p className="font-mono text-base text-right-color">{item.answer}</p>
+      {/* SEZIONE CONTENUTO */}
+      <section className="section-hero-clean">
+        <div className="flex flex-col justify-center h-full p-4">
+          <div className="max-w-4xl mx-auto w-full">
+            
+            {/* Titolo principale */}
+            <div className="text-center mb-12">
+              <h1 className="font-mono text-3xl md:text-4xl lg:text-5xl font-bold text-supercompany-dark-gray mb-8 leading-tight">
+                FAQ
+              </h1>
+            </div>
+
+            {/* Contenuto FAQ */}
+            <div className="space-y-8 max-w-3xl mx-auto">
+              {faqData.map((item, index) => (
+                <div key={index} className="border-b border-gray-200 pb-8 last:border-b-0">
+                  <h3 className="font-mono text-xl font-semibold text-supercompany-magenta mb-4">
+                    {item.question}
+                  </h3>
+                  <p className="font-mono text-base lg:text-lg text-supercompany-dark-gray leading-relaxed">
+                    {item.answer}
+                  </p>
+                </div>
+              ))}
+            </div>
           </div>
-        ))}
-      </div>
+        </div>
+      </section>
     </div>
   );
-
-  return <SplitLayout leftContent={leftContent} rightContent={rightContent} />;
 };
 
 export default FaqPage;

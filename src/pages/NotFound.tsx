@@ -1,28 +1,43 @@
-// src/pages/NotFound.tsx
-
-import SplitLayout from "@/components/layout/SplitLayout";
+import Navigation from "@/components/layout/Navigation";
 import { Link } from "react-router-dom";
-// import Navigation from "@/components/layout/Navigation"; // <-- RIMOSSO
 
 const NotFound = () => {
-  const leftContent = (
-    // <Navigation /> <-- RIMOSSO
-    <div className="flex flex-col justify-center h-full text-center p-4">
-      <h1 className="font-pixel text-4xl text-magenta mb-8">404</h1>
-      <p className="font-mono text-left-color mb-8">Pagina non trovata</p>
+  return (
+    <div className="vertical-layout">
+      {/* SEZIONE NAVIGAZIONE CON SFONDO NERO */}
+      <section className="section-navigation-black">
+        <Navigation />
+      </section>
+
+      {/* SEZIONE CONTENUTO */}
+      <section className="section-hero-clean">
+        <div className="flex flex-col justify-center h-full p-4">
+          <div className="max-w-4xl mx-auto w-full text-center">
+            
+            <h1 className="font-mono text-6xl md:text-8xl font-bold text-supercompany-magenta mb-8">
+              404
+            </h1>
+            
+            <h2 className="font-mono text-2xl md:text-3xl text-supercompany-dark-gray mb-8">
+              Pagina non trovata
+            </h2>
+            
+            <p className="font-mono text-base lg:text-lg text-supercompany-dark-gray mb-8 max-w-md mx-auto">
+              Ops! La pagina che cerchi non esiste o è stata spostata.
+            </p>
+            
+            <Link 
+              to="/" 
+              className="inline-block bg-supercompany-dark-gray text-supercompany-white px-8 py-4 rounded font-mono font-bold text-lg hover:bg-supercompany-magenta transition-colors duration-300"
+            >
+              Torna alla Home
+            </Link>
+            
+          </div>
+        </div>
+      </section>
     </div>
   );
-
-  const rightContent = (
-    <div className="flex flex-col justify-center h-full text-center p-4">
-      <p className="font-mono text-right-color mb-8">Ops! La pagina che cerchi non esiste.</p>
-      <Link to="/" className="text-supercompany-magenta underline hover:text-supercompany-green font-mono transition-colors">
-        {">"} Torna alla Home
-      </Link>
-    </div>
-  );
-
-  return <SplitLayout leftContent={leftContent} rightContent={rightContent} />;
 };
 
 export default NotFound;

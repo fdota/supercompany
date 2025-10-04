@@ -4,7 +4,7 @@ interface SheetCounters {
   totalMoney: number;
   totalHours: number;
   totalPeople: number;
-  totalValueOre: number; // 🎯 IMPORTANTE: aggiungi questa riga
+  totalValueOre: number;
   totalValue: number;
 }
 
@@ -17,7 +17,7 @@ export const useSheetData = (): {
     totalMoney: 0,
     totalHours: 0,
     totalPeople: 0,
-    totalValueOre: 0, // 🎯 AGGIUNGI ANCHE QUI
+    totalValueOre: 0,
     totalValue: 0
   });
   const [loading, setLoading] = useState(true);
@@ -37,7 +37,7 @@ export const useSheetData = (): {
           totalMoney: result.totali.investimenti || 0,
           totalHours: result.totali.oreLavoro || 0,
           totalPeople: result.totali.persone || 0,
-          totalValueOre: result.totali.valoreOre || 0, // 🎯 E QUI
+          totalValueOre: result.totali.valoreOre || 0,
           totalValue: result.totali.totaleComplessivo || 0
         };
         
