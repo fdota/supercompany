@@ -1,25 +1,33 @@
 import Navigation from "@/components/layout/Navigation";
 
-const faqData = [
-  {
-    question: "Cosa succede ai miei soldi una volta che aderisco?",
-    answer: "La cifra che inserisci è un impegno, non un pagamento. Nessun denaro verrà raccolto fino a quando non avremo definito insieme il progetto d'impresa e le modalità legali per la costituzione della società.",
-  },
-  {
-    question: "Come verrà scelta l'idea di business?",
-    answer: "Tutti i partecipanti verranno invitati su una piattaforma privata (es. Discord) dove le idee verranno presentate, discusse e votate. Il processo sarà democratico e trasparente.",
-  },
-  {
-    question: "Che ruolo avrò nell'azienda?",
-    answer: "Aderendo, diventi un potenziale co-fondatore. Il tuo ruolo dipenderà dalla natura del progetto scelto e dalle tue competenze, oltre che dal tuo impegno. Tutti i dettagli verranno definiti insieme.",
-  },
-  {
-    question: "Come funziona l'impegno di tempo e come viene valutato?",
-    answer: "Crediamo che il tempo e il talento siano preziosi quanto il denaro. Per questo, abbiamo introdotto un valore convenzionale di co-fondazione di 10 €/ora. Questo ci permette di quantificare la forza totale del progetto e di valorizzare ogni tipo di contributo in modo equo in questa fase iniziale.",
-  },
-];
+const FAQPage = () => {
+  const faqItems = [
+    {
+      question: "Cos'è Super Company?",
+      answer: "Super Company è un progetto che mira a creare una comunità di persone interessate ad aprire un'azienda insieme. L'idea è unire competenze e risorse per realizzare qualcosa di più grande di quanto si potrebbe fare da soli."
+    },
+    {
+      question: "Come funziona?",
+      answer: "Le persone manifestano interesse indicando il tipo di contributo che potrebbero offrire: economico, in competenze/tempo, o entrambi. Quando raggiungeremo una massa critica, valuteremo insieme le migliori opportunità di business."
+    },
+    {
+      question: "Devo investire soldi subito?",
+      answer: "No, al momento stiamo solo raccogliendo manifestazioni d'interesse non vincolanti. Eventuali investimenti economici verranno discussi e decisi collettivamente solo quando il progetto sarà più definito."
+    },
+    {
+      question: "Quali competenze sono più richieste?",
+      answer: "Cerchiamo persone con competenze in sviluppo software, design, marketing, finanza, operazioni, risorse umane e legale. Ma ogni competenza può essere preziosa per un'azienda."
+    },
+    {
+      question: "Come vengono gestiti i dati personali?",
+      answer: "I dati vengono conservati in modo sicuro su Google Sheets e utilizzati esclusivamente per contattarti riguardo al progetto. Puoi consultare la nostra Privacy Policy per maggiori dettagli."
+    },
+    {
+      question: "Posso partecipare se non ho competenze specifiche?",
+      answer: "Assolutamente sì! Anche l'entusiasmo, la voglia di imparare e contribuire con il proprio tempo sono risorse preziose. L'importante è la volontà di fare parte di un progetto collettivo."
+    }
+  ];
 
-const FaqPage = () => {
   return (
     <div className="vertical-layout">
       {/* SEZIONE NAVIGAZIONE CON SFONDO NERO */}
@@ -39,19 +47,20 @@ const FaqPage = () => {
               </h1>
             </div>
 
-            {/* Contenuto FAQ */}
+            {/* FAQ con stile citazione */}
             <div className="space-y-8 max-w-3xl mx-auto">
-              {faqData.map((item, index) => (
-                <div key={index} className="border-b border-gray-200 pb-8 last:border-b-0">
-                  <h3 className="font-mono text-xl font-semibold text-supercompany-magenta mb-4">
+              {faqItems.map((item, index) => (
+                <div key={index} className="border-l-4 border-supercompany-magenta pl-6 py-4 bg-gray-50 rounded-r">
+                  <h3 className="font-mono text-lg font-semibold text-supercompany-dark-gray mb-3">
                     {item.question}
                   </h3>
-                  <p className="font-mono text-base lg:text-lg text-supercompany-dark-gray leading-relaxed">
+                  <p className="font-mono text-base text-supercompany-dark-gray leading-relaxed">
                     {item.answer}
                   </p>
                 </div>
               ))}
             </div>
+
           </div>
         </div>
       </section>
@@ -59,4 +68,4 @@ const FaqPage = () => {
   );
 };
 
-export default FaqPage;
+export default FAQPage;

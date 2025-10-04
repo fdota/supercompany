@@ -111,14 +111,80 @@
     color: hsl(var(--supercompany-white));
     text-align: center;
   }
-/* FORM AL 50% DELLA LARGHEZZA */
-.form-half-width {
-  max-width: 500px;
-  margin: 0 auto;
-  background: transparent;
-  border: none;
-  padding: 0;
-}
+
+  /* FORM AL 50% DELLA LARGHEZZA */
+  .form-half-width {
+    max-width: 500px;
+    margin: 0 auto;
+    background: transparent;
+    border: none;
+    padding: 0;
+  }
+
+  /* CONTATORI AFFIANCATI */
+  .contatori-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    margin-bottom: 4rem;
+    align-items: start;
+  }
+
+  .contatore-item {
+    text-align: left;
+  }
+
+  .contatore-totale {
+    text-align: center;
+    padding-top: 3rem;
+    border-top: 1px solid #e5e5e5;
+  }
+
+  /* EFFETTO HOVER SUI TITOLI */
+  .counter-title {
+    font-family: var(--font-mono);
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: hsl(var(--supercompany-dark-gray));
+    margin-bottom: 0.75rem;
+    line-height: 1.4;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    transition: color 0.3s ease;
+  }
+
+  .counter-title:hover {
+    color: hsl(var(--supercompany-magenta));
+  }
+
+  /* VALORI NUMERICI - MAGENTA per i primi due contatori */
+  .contatore-item .counter-value {
+    font-family: var(--font-mono);
+    font-size: 2.75rem;
+    font-weight: bold;
+    color: hsl(var(--supercompany-magenta));
+    margin-bottom: 0.75rem;
+  }
+
+  /* VALORE TOTALE - VERDE e più grande */
+  .contatore-totale .counter-value {
+    font-family: var(--font-mono);
+    font-size: 3.25rem;
+    font-weight: bold;
+    color: hsl(var(--supercompany-green));
+    margin-bottom: 0.75rem;
+  }
+
+  /* SOTTOTITOLI */
+  .counter-subtitle {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: hsl(var(--supercompany-dark-gray));
+    opacity: 0.7;
+    line-height: 1.6;
+  }
+
   /* Logo styles */
   .logo-nav {
     height: 48px;
@@ -129,7 +195,7 @@
     filter: drop-shadow(1px 1px 0px #000);
   }
 
-  /* Navigation styles - SPOSTATA A SINISTRA */
+  /* Navigation styles */
   .nav-container {
     display: flex;
     flex-direction: column;
@@ -160,50 +226,7 @@
     color: hsl(var(--supercompany-green));
   }
 
-  /* Counter styles - COME NELLE IMMAGINI */
-  .counter-simple {
-    font-family: var(--font-mono);
-    border: none;
-    background: transparent;
-    text-align: left;
-    max-width: 500px;
-    margin: 0 auto;
-    padding: 1.5rem 0;
-    border-bottom: 1px solid #e5e5e5;
-  }
-
-  .counter-simple:last-child {
-    border-bottom: none;
-  }
-
-  .counter-title {
-    font-family: var(--font-mono);
-    font-size: 1rem;
-    font-weight: 700;
-    color: hsl(var(--supercompany-dark-gray));
-    margin-bottom: 0.75rem;
-    line-height: 1.4;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-  }
-
-  .counter-value {
-    font-family: var(--font-mono);
-    font-size: 2.5rem;
-    font-weight: bold;
-    color: hsl(var(--supercompany-dark-gray));
-    margin-bottom: 0.75rem;
-  }
-
-  .counter-subtitle {
-    font-family: var(--font-mono);
-    font-size: 0.85rem;
-    color: hsl(var(--supercompany-dark-gray));
-    opacity: 0.7;
-    line-height: 1.6;
-  }
-
-  /* Form styles - LAYOUT ESATTO COME NELL'IMMAGINE */
+  /* Form styles */
   .form-simple {
     max-width: 500px;
     margin: 0 auto;
@@ -212,15 +235,23 @@
     padding: 0;
   }
 
+  /* TITOLO FORM */
   .form-title {
-    font-family: var(--font-pixel);
-    font-size: 1.5rem;
+    font-family: var(--font-mono);
+    font-size: 2.5rem;
+    font-weight: 700;
     color: hsl(var(--supercompany-dark-gray));
     margin-bottom: 2rem;
     text-align: center;
-    font-weight: normal;
     text-transform: uppercase;
-    letter-spacing: 1px;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    transition: color 0.3s ease;
+    line-height: 1.2;
+  }
+
+  .form-title:hover {
+    color: hsl(var(--supercompany-magenta));
   }
 
   .form-label {
@@ -250,7 +281,7 @@
     box-shadow: 0 0 0 2px rgba(255, 0, 255, 0.1);
   }
 
-  /* STILI PER IL SELECT NATIVO - FUNZIONANTI */
+  /* STILI PER IL SELECT NATIVO */
   .form-select {
     width: 100%;
     padding: 0.75rem;
@@ -293,6 +324,36 @@
     cursor: pointer;
   }
 
+  /* PULSANTE GRANDE */
+  .form-button-large {
+    width: 100%;
+    padding: 1.5rem 2rem;
+    background: hsl(var(--supercompany-dark-gray));
+    color: white;
+    border: none;
+    font-family: var(--font-mono);
+    font-size: 1.2rem;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 1rem;
+    transition: all 0.3s;
+    border-radius: 0.25rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .form-button-large:hover {
+    background: hsl(var(--supercompany-magenta));
+    transform: scale(1.02);
+  }
+
+  .form-button-large:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  /* Pulsante originale */
   .form-button {
     width: 100%;
     padding: 1rem;
@@ -319,10 +380,11 @@
 
   /* Social styles */
   .social-title {
-    font-family: var(--font-pixel);
+    font-family: var(--font-mono);
     font-size: 1.2rem;
     color: hsl(var(--supercompany-magenta));
     margin-bottom: 1.5rem;
+    font-weight: 700;
   }
 
   .social-links {
@@ -401,7 +463,6 @@
     border-color: hsl(var(--supercompany-dark-gray));
   }
 
-  /* Utility per margini a sinistra */
   .ml-0 {
     margin-left: 0;
   }
@@ -454,7 +515,28 @@ input[type="number"]::-webkit-inner-spin-button {
   margin: 0;
 }
 
-/* Responsive */
+/* RESPONSIVE PER CONTATORI */
+@media (max-width: 768px) {
+  .contatori-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    margin-bottom: 2rem;
+  }
+  
+  .contatore-item .counter-value {
+    font-size: 2.25rem;
+  }
+  
+  .contatore-totale .counter-value {
+    font-size: 2.75rem;
+  }
+  
+  .contatore-totale {
+    padding-top: 2rem;
+  }
+}
+
+/* Responsive generale */
 @media (min-width: 768px) {
   .section-navigation-black,
   .section-hero-clean,
@@ -486,6 +568,10 @@ input[type="number"]::-webkit-inner-spin-button {
   .split-screen {
     flex-direction: row;
   }
+
+  .form-title {
+    font-size: 2.5rem;
+  }
 }
 
 @media (min-width: 1024px) {
@@ -500,6 +586,10 @@ input[type="number"]::-webkit-inner-spin-button {
   .logo-nav {
     height: 56px;
     max-width: 220px;
+  }
+
+  .form-title {
+    font-size: 3rem;
   }
 }
 
@@ -518,7 +608,7 @@ input[type="number"]::-webkit-inner-spin-button {
   }
 }
 
-/* Stili per la lista puntata come nell'immagine */
+/* Stili per la lista puntata */
 .list-disc {
   list-style-type: disc;
 }

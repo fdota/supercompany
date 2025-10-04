@@ -1,6 +1,19 @@
 import Navigation from "@/components/layout/Navigation";
+import { useNavigate } from "react-router-dom";
 
 const ChiSonoPage = () => {
+  const navigate = useNavigate();
+
+  const scrollToForm = () => {
+    navigate("/");
+    setTimeout(() => {
+      const formSection = document.querySelector('.section-form');
+      if (formSection) {
+        formSection.scrollIntoView({ behavior: 'smooth' });
+      }
+    }, 100);
+  };
+
   return (
     <div className="vertical-layout">
       {/* SEZIONE NAVIGAZIONE CON SFONDO NERO */}
@@ -27,7 +40,7 @@ const ChiSonoPage = () => {
               <div className="flex justify-center mb-8">
                 <div className="w-64 h-64 rounded-lg overflow-hidden border-2 border-supercompany-magenta shadow-lg">
                   <img 
-                    src="/fabio.jpeg" 
+                    src="/fabio.jpg" 
                     alt="Fabio - Fondatore di Super Company" 
                     className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
                   />
@@ -56,9 +69,15 @@ const ChiSonoPage = () => {
                   </p>
                 </div>
 
-                <p className="font-bold text-supercompany-green text-center text-lg">
-                  Buon viaggio a chi salira' a bordo!
-                </p>
+                {/* Pulsante finale */}
+                <div className="text-center mt-8">
+                  <button
+                    onClick={scrollToForm}
+                    className="font-mono font-bold text-black uppercase text-lg hover:text-supercompany-green transition-colors duration-300 cursor-pointer"
+                  >
+                    BUON VIAGGIO A CHI SALIRÀ A BORDO!
+                  </button>
+                </div>
               </div>
             </div>
           </div>

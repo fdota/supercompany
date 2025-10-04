@@ -123,36 +123,39 @@ const HomePage = () => {
               </h1>
               
               <h2 className="font-mono text-lg md:text-xl lg:text-2xl text-supercompany-dark-gray leading-relaxed">
-  Se da solo non riesci, insieme si <span className="text-supercompany-green font-semibold">può</span>.
-</h2>            </div>
+                Se da solo non riesci, insieme si <span className="text-supercompany-green font-semibold">può</span>.
+              </h2>
+            </div>
 
             {/* Contenuto testuale - STILE PULITO COME I CONTATORI */}
             <div className="space-y-8 max-w-3xl mx-auto">
               
-              {/* Introduzione */}
-              <div className="text-center">
-                <p className="font-mono text-base lg:text-lg text-supercompany-dark-gray leading-relaxed font-medium">
-                  Ciao a tutti, mi chiamo Fabio e sto cercando di creare una comunità di persone che vogliano aprire un'azienda vincente assieme.
-                </p>
-              </div>
+            {/* Introduzione */}
+<div className="text-center">
+  <p className="font-mono text-base lg:text-lg text-supercompany-dark-gray leading-relaxed font-medium group cursor-pointer">
+    <span className="group-hover:text-supercompany-magenta transition-colors duration-300">
+      Ciao a tutti, mi chiamo Fabio e sto cercando di creare una comunità di persone che vogliano aprire un'azienda vincente{" "}
+    </span>
+    <span className="text-supercompany-dark-gray group-hover:text-supercompany-green transition-colors duration-300">
+      assieme.
+    </span>
+  </p>
+</div>
 
-              {/* Punti chiave */}
-              <div className="space-y-4 font-mono text-base text-supercompany-dark-gray leading-relaxed">
-                <div className="flex items-start">
-                  <span className="text-supercompany-magenta mr-3 font-bold">-</span>
-                  <p>È difficile farcela da soli. I soldi e le competenze non bastano mai.</p>
-                </div>
-                
-                <div className="flex items-start">
-                  <span className="text-supercompany-magenta mr-3 font-bold">-</span>
-                  <p>Per questo ho pensato a questa Super Company, una super azienda che parte dalla coesione per diventare grande.</p>
-                </div>
-                
-                <div className="flex items-start">
-                  <span className="text-supercompany-magenta mr-3 font-bold">-</span>
-                  <p>Qui puoi indicare il tuo potenziale contributo, che sia in denaro o in lavoro.</p>
-                </div>
-              </div>
+              {/* Punti chiave - SENZA TRATTINI */}
+<div className="space-y-4 font-mono text-base text-supercompany-dark-gray leading-relaxed">
+  <div className="flex items-start">
+    <p>È difficile farcela da soli. I soldi e le competenze non bastano mai.</p>
+  </div>
+  
+  <div className="flex items-start">
+    <p>Per questo ho pensato a questa Super Company, una super azienda che parte dalla coesione per diventare grande.</p>
+  </div>
+  
+  <div className="flex items-start">
+    <p>Qui puoi indicare il tuo potenziale contributo, che sia in denaro o in lavoro.</p>
+  </div>
+</div>
 
               {/* Citazione */}
               <div className="border-l-4 border-supercompany-magenta pl-6 py-4 bg-gray-50 rounded-r">
@@ -176,39 +179,42 @@ const HomePage = () => {
         </div>
       </section>
 
-      {/* SEZIONE 3: CONTATORI - MANTENUTA COSÌ COM'È (BIANCA) */}
+      {/* SEZIONE 3: CONTATORI - NUOVA LAYOUT */}
       <section className="section-counters">
         <div className="flex flex-col justify-center h-full p-4">
-          <div className="space-y-12 max-w-4xl mx-auto w-full">
+          <div className="max-w-4xl mx-auto w-full">
             
-            {/* CONTATORE 1: POTENZIALE CAPITALE RACCOLTO */}
-            <div className="counter-simple">
-              <h3 className="counter-title">POTENZIALE CAPITALE RACCOLTO</h3>
-              <div className="counter-value">
-                {loading ? "..." : counters.totalMoney} €
+            {/* GRIGLIA CON DUE CONTATORI AFFIANCATI */}
+            <div className="contatori-grid">
+              {/* CONTATORE 1: POTENZIALE CAPITALE RACCOLTO */}
+              <div className="contatore-item">
+                <h3 className="counter-title">POTENZIALE CAPITALE RACCOLTO</h3>
+                <div className="counter-value">
+                  {loading ? "..." : counters.totalMoney} €
+                </div>
+                <p className="counter-subtitle">
+                  Stima indicativa basata su manifestazioni d'interesse non vincolanti. 
+                  Non costituisce impegno di raccolta effettiva né garanzia di risultato.
+                </p>
               </div>
-              <p className="counter-subtitle">
-                Stima indicativa basata su manifestazioni d'interesse non vincolanti. 
-                Non costituisce impegno di raccolta effettiva né garanzia di risultato.
-              </p>
+
+              {/* CONTATORE 2: ORE DI COMPETENZE OFFERTE */}
+              <div className="contatore-item">
+                <h3 className="counter-title">ORE DI COMPETENZE OFFERTE</h3>
+                <div className="counter-value">
+                  {loading ? "..." : counters.totalValueOre} €
+                </div>
+                <p className="counter-subtitle">
+                  Valore convenzionale delle competenze messe a disposizione dalla community.
+                  Le ore indicate rappresentano disponibilità espresse senza obbligo di prestazione.
+                </p>
+              </div>
             </div>
 
-            {/* CONTATORE 2: ORE DI COMPETENZE OFFERTE */}
-            <div className="counter-simple">
-              <h3 className="counter-title">ORE DI COMPETENZE OFFERTE</h3>
-              <div className="counter-value">
-                {loading ? "..." : counters.totalValueOre} €
-              </div>
-              <p className="counter-subtitle">
-                Valore convenzionale delle competenze messe a disposizione dalla community.
-                Le ore indicate rappresentano disponibilità espresse senza obbligo di prestazione.
-              </p>
-            </div>
-
-            {/* CONTATORE 3: TOTALE COMPLESSIVO */}
-            <div className="counter-simple">
+            {/* CONTATORE 3: TOTALE COMPLESSIVO - SOTTO */}
+            <div className="contatore-totale">
               <h3 className="counter-title">TOTALE COMPLESSIVO</h3>
-              <div className="counter-value">
+              <div className="counter-value total-value">
                 {loading ? "..." : counters.totalValue} €
               </div>
               <p className="counter-subtitle">
@@ -225,7 +231,7 @@ const HomePage = () => {
       <section className="section-form">
         <div className="flex flex-col justify-center h-full p-4">
           <div className="form-half-width">
-            <h2 className="form-title">MANIFESTA INTERESSE</h2>
+            <h2 className="form-title">PARTECIPA</h2>
             
             <form onSubmit={handleSubmit} className="space-y-6">
               {/* RIGA NOME E EMAIL AFFIANCATI */}
@@ -385,13 +391,13 @@ const HomePage = () => {
                 </div>
               )}
 
-              {/* Bottone Submit */}
+              {/* Bottone Submit - MODIFICATO PER ESSERE PIÙ GRANDE */}
               <button 
                 type="submit" 
                 disabled={isSubmitting}
-                className="form-button"
+                className="form-button-large"
               >
-                {isSubmitting ? "Invio in corso..." : "Manifesta interesse"}
+                {isSubmitting ? "Invio in corso..." : "MANIFESTA INTERESSE"}
               </button>
             </form>
 
@@ -408,7 +414,9 @@ const HomePage = () => {
       {/* SEZIONE 5: SOCIAL (NERA) - CON WHATSAPP PRIMO */}
       <section className="section-social">
         <div className="flex flex-col justify-center h-full p-4">
-          <h3 className="social-title">Condividi sui tuoi social il progetto</h3>
+          <h3 className="font-mono text-xl font-bold text-supercompany-magenta mb-6">
+            Condividi sui tuoi social il progetto
+          </h3>
           
           <div className="social-links">
             <a href="#" className="social-link">WhatsApp</a>
@@ -417,7 +425,7 @@ const HomePage = () => {
             <a href="#" className="social-link">Instagram</a>
           </div>
 
-          <p className="help-text">
+          <p className="font-mono text-sm opacity-80 mt-8">
             Condividi il Progetto con altre persone!
           </p>
         </div>

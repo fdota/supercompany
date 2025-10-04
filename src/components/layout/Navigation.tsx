@@ -26,7 +26,7 @@ const Navigation = () => {
             <li key={item.path}>
               <Link
                 to={item.path}
-                className={`nav-link font-mono text-sm ${
+                className={`nav-link font-mono text-sm lowercase ${
                   location.pathname === item.path 
                     ? "text-magenta" 
                     : isHeroSection 
